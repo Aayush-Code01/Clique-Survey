@@ -66,7 +66,7 @@
             letter-spacing: 0.01em;
         }
 
-        /* --- CUSTOM BRAND CURSOR (SIMPLE ARROW) --- */
+        /* --- CUSTOM BRAND CURSOR --- */
         @media (hover: hover) and (pointer: fine) {
             body {
                 cursor: none;
@@ -78,11 +78,17 @@
                 left: 0;
                 z-index: 9999;
                 opacity: 0;
-                width: 20px;
-                height: 20px;
+                width: 24px;
+                height: 24px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+            }
+            
+            #cursor-brand img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
             
             /* Pointer reset for interactives but still hiding system cursor */
@@ -292,12 +298,9 @@
 </head>
 <body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden bg-animate">
 
-    <!-- Simple Custom Brand Cursor -->
+    <!-- Custom Brand Cursor -->
     <div id="cursor-brand">
-        <!-- Brand Colored Simple Arrow -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 2L20 12L4 22V2Z" fill="#FC6263" />
-        </svg>
+        <img src="/images/cursor.svg" alt="custom cursor">
     </div>
 
     <!-- MOBILE MENU OVERLAY -->
@@ -1004,11 +1007,12 @@
             splitToChars('#animate-human');
             splitToWords('#animate-behavior');
 
-            /* --- SIMPLIFIED CUSTOM BRAND CURSOR --- */
+            /* --- UPDATED CUSTOM BRAND CURSOR --- */
             if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
                 const cursor = document.getElementById('cursor-brand');
 
                 window.addEventListener('mousemove', (e) => {
+                    // Tip of the custom SVG aligns with the real pointer
                     gsap.to(cursor, { x: e.clientX, y: e.clientY, opacity: 1, duration: 0 });
                 });
                 
