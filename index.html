@@ -64,13 +64,31 @@
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
             letter-spacing: 0.01em;
-            /* Custom Cursor */
-            cursor: url('/images/cursor.svg'), auto;
         }
-        
-        /* Ensure interactive elements still show the pointer but respect custom style if needed */
-        a, button, [onclick], select, summary {
-            cursor: pointer;
+
+        /* --- CUSTOM BRAND CURSOR (SIMPLE ARROW) --- */
+        @media (hover: hover) and (pointer: fine) {
+            body {
+                cursor: none;
+            }
+            #cursor-brand {
+                pointer-events: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 9999;
+                opacity: 0;
+                width: 20px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Pointer reset for interactives but still hiding system cursor */
+            a, button, [onclick], select, summary, .specialization-card, .faq-header {
+                cursor: none;
+            }
         }
 
         .gsap-reveal { opacity: 0; }
@@ -267,6 +285,14 @@
 </head>
 <body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden bg-animate">
 
+    <!-- Simple Custom Brand Cursor -->
+    <div id="cursor-brand">
+        <!-- Brand Colored Simple Arrow -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 2L20 12L4 22V2Z" fill="#FC6263" />
+        </svg>
+    </div>
+
     <!-- MOBILE MENU OVERLAY -->
     <div id="mobileMenuOverlay" class="fixed inset-0 z-[100] bg-white dark:bg-slate-950 flex flex-col items-center justify-center space-y-8 p-10 lg:hidden">
         <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-slate-500">
@@ -337,7 +363,6 @@
                         <option value="BRAZIL">BRAZIL</option>
                         <option value="BRUNEI">BRUNEI</option>
                         <option value="BULGARIA">BULGARIA</option>
-                        <option value="BRITISH INDIAN OCEAN TERRITORY">BRITISH INDIAN OCEAN TERRITORY</option>
                         <option value="BURKINA FASO">BURKINA FASO</option>
                         <option value="BURUNDI">BURUNDI</option>
                         <option value="CABO VERDE">CABO VERDE</option>
@@ -622,7 +647,7 @@
         </div>
     </section>
 
-    <!-- 2. Dynamic Intelligence Stats -->
+    <!-- 2. Stats Section -->
     <section class="py-24 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center mobile-center gsap-reveal">
@@ -669,7 +694,7 @@
         </div>
     </section>
 
-    <!-- 4. Pillar: Solutions -->
+    <!-- Pillar 4: Solutions -->
     <section id="services" class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Pillar 1 -->
@@ -781,7 +806,7 @@
         </div>
     </section>
 
-    <!-- FAQ Section (COLLAPSIBLE) -->
+    <!-- FAQ Section -->
     <section id="faq" class="py-40 bg-slate-50 dark:bg-slate-900/50">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-24 gsap-reveal">
@@ -789,7 +814,6 @@
             </div>
             
             <div class="space-y-4 gsap-reveal">
-                <!-- FAQ Item 1 -->
                 <div class="faq-item">
                     <button class="faq-header group" onclick="toggleFaq(this)">
                         <h4 class="text-lg font-bold italic tracking-tight group-hover:text-brand transition-colors">How do you verify your B2B respondents?</h4>
@@ -804,7 +828,6 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 2 -->
                 <div class="faq-item">
                     <button class="faq-header group" onclick="toggleFaq(this)">
                         <h4 class="text-lg font-bold italic tracking-tight group-hover:text-brand transition-colors">What is your typical turnaround time for global fieldwork?</h4>
@@ -819,7 +842,6 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 3 -->
                 <div class="faq-item">
                     <button class="faq-header group" onclick="toggleFaq(this)">
                         <h4 class="text-lg font-bold italic tracking-tight group-hover:text-brand transition-colors">Are you compliant with international data laws?</h4>
@@ -834,7 +856,6 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 4 -->
                 <div class="faq-item">
                     <button class="faq-header group" onclick="toggleFaq(this)">
                         <h4 class="text-lg font-bold italic tracking-tight group-hover:text-brand transition-colors">Can you handle custom survey programming?</h4>
@@ -910,13 +931,6 @@
         /* FAQ Toggle Function */
         function toggleFaq(header) {
             const item = header.parentElement;
-            const isActive = item.classList.contains('active');
-            
-            // Optional: Close other items
-            document.querySelectorAll('.faq-item').forEach(i => {
-                if (i !== item) i.classList.remove('active');
-            });
-            
             item.classList.toggle('active');
         }
 
@@ -937,6 +951,20 @@
         window.onload = () => {
             splitToChars('#animate-human');
             splitToWords('#animate-behavior');
+
+            /* --- SIMPLIFIED CUSTOM BRAND CURSOR --- */
+            if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+                const cursor = document.getElementById('cursor-brand');
+
+                window.addEventListener('mousemove', (e) => {
+                    // Tip of the arrow aligns with exactly where the mouse is
+                    gsap.to(cursor, { x: e.clientX, y: e.clientY, opacity: 1, duration: 0 });
+                });
+                
+                document.addEventListener('mouseleave', () => {
+                    gsap.to(cursor, { opacity: 0 });
+                });
+            }
 
             gsap.utils.toArray(".gsap-reveal").forEach(el => {
                 gsap.fromTo(el, 
