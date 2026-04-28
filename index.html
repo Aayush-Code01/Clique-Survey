@@ -60,7 +60,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
-            letter-spacing: 0.01em; /* Slight distance between letters globally */
+            letter-spacing: 0.01em;
         }
         
         .gsap-reveal { opacity: 0; }
@@ -73,23 +73,35 @@
         .panel-input {
             width: 100%;
             border-bottom: 1px solid #cbd5e1;
-            padding: 0.75rem 0;
+            padding: 0.85rem 0;
             background: transparent;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             outline: none;
             transition: border-color 0.3s;
+            border-radius: 0;
+            -webkit-appearance: none;
+            appearance: none;
         }
+        
+        select.panel-input {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0px center;
+            background-size: 1rem;
+            padding-right: 2rem;
+        }
+
         .dark .panel-input { border-color: #334155; color: #cbd5e1; }
         .panel-input:focus { border-color: #FC6263; }
+        .panel-input::placeholder { color: #94a3b8; font-weight: 600; }
 
         .gradient-brand {
             background: linear-gradient(135deg, #FC6263 0%, #ff8e8f 100%);
         }
 
-        /* --- REDESIGNED ANTI-JITTER CARDS --- */
         .specialization-card {
             position: relative;
             height: 520px;
@@ -141,7 +153,6 @@
             transform: translate3d(0, -10px, 0);
         }
 
-        /* Animated Background Gradients */
         .bg-animate {
             background: radial-gradient(circle at 50% 50%, rgba(252, 98, 99, 0.03) 0%, transparent 50%),
                         radial-gradient(circle at 10% 10%, rgba(252, 98, 99, 0.02) 0%, transparent 30%);
@@ -174,9 +185,7 @@
             transform: translateY(0);
         }
         
-        h1, h2, h3, h4 { 
-            letter-spacing: -0.01em; /* Balancing tight and readable */
-        }
+        h1, h2, h3, h4 { letter-spacing: -0.01em; }
 
         .tracking-slight { letter-spacing: 0.02em; }
         .tracking-premium { letter-spacing: 0.05em; }
@@ -186,7 +195,6 @@
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .dark ::-webkit-scrollbar-thumb { background: #334155; }
         
-        /* Premium Text Mask Animation */
         .text-mask {
             display: inline-block;
             overflow: hidden;
@@ -202,6 +210,12 @@
             opacity: 0;
             transform: translateY(10px);
         }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(203, 213, 225, 0.5);
+            padding: 1.5rem 0;
+        }
+        .dark .faq-item { border-color: rgba(51, 65, 85, 0.5); }
     </style>
 </head>
 <body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden bg-animate">
@@ -212,35 +226,102 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
         <a href="#vision" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Vision</a>
-        <a href="#services" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Services</a>
+        <a href="#services" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Solutions</a>
         <a href="#quality" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Integrity</a>
         <a href="#industries" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Sectors</a>
-        <a href="#faq" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Insights</a>
+        <a href="#faq" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">FAQ</a>
         <button onclick="toggleModal(); toggleMobileMenu();" class="gradient-brand text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest shadow-xl shadow-brand/20">Join Global Panel</button>
     </div>
 
     <!-- JOIN PANEL MODAL -->
     <div id="panelModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onclick="toggleModal()"></div>
-        <div class="relative bg-white dark:bg-slate-900 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl p-8 md:p-12 border border-white/5">
-            <button onclick="toggleModal()" class="absolute top-6 right-6 text-slate-400 hover:text-brand transition-colors">
+        <div class="relative bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl p-8 md:p-14 border border-white/5">
+            <button onclick="toggleModal()" class="absolute top-8 right-8 text-slate-400 hover:text-brand transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
-            <h2 class="text-3xl font-bold text-brand mb-8 text-center tracking-slight">Global Panel Membership</h2>
-            <form action="https://formspree.io/f/sales@cliquesurvey.com" method="POST" class="space-y-6">
+            <h2 class="text-5xl md:text-6xl font-bold text-brand mb-12 text-left tracking-tight">Join Our Panel</h2>
+            <form action="https://formspree.io/f/sales@cliquesurvey.com" method="POST" class="space-y-8">
                 <input type="hidden" name="_subject" value="New Panel Application - Clique Survey">
-                <div class="grid gap-6">
-                    <input type="text" name="name" placeholder="FULL NAME" class="panel-input" required>
-                    <select name="gender" class="panel-input"><option>GENDER</option><option>MALE</option><option>FEMALE</option><option>OTHER</option></select>
-                    <input type="email" name="email" placeholder="EMAIL ADDRESS" class="panel-input" required>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <input type="tel" name="phone" placeholder="PHONE" class="panel-input">
-                        <input type="text" name="zip" placeholder="POSTAL CODE" class="panel-input">
-                    </div>
-                    <select name="panel_type" class="panel-input"><option>SELECT PANEL</option><option>CONSUMER</option><option>B2B / EXEC</option><option>HEALTHCARE</option></select>
-                    <textarea name="message" placeholder="MESSAGE" rows="2" class="panel-input"></textarea>
+                
+                <div class="grid gap-8">
+                    <input type="text" name="name" placeholder="ENTER YOUR NAME" class="panel-input" required>
+                    
+                    <select name="gender" class="panel-input" required>
+                        <option value="" disabled selected>SELECT GENDER</option>
+                        <option value="MALE">MALE</option>
+                        <option value="FEMALE">FEMALE</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
+
+                    <input type="email" name="email" placeholder="ENTER A VALID EMAIL ADDRESS" class="panel-input" required>
+                    
+                    <input type="tel" name="phone" placeholder="ENTER YOUR PHONE (E.G. +14155552675)" class="panel-input" required>
+                    
+                    <input type="text" name="address" placeholder="ENTER YOUR ADDRESS" class="panel-input" required>
+                    
+                    <input type="text" name="postal_code" placeholder="ENTER POSTAL CODE" class="panel-input" required>
+
+                    <select name="country" class="panel-input" required>
+                        <option value="" disabled selected>SELECT COUNTRY</option>
+                        <option value="UNITED STATES">UNITED STATES</option>
+                        <option value="UNITED KINGDOM">UNITED KINGDOM</option>
+                        <option value="CANADA">CANADA</option>
+                        <option value="AUSTRALIA">AUSTRALIA</option>
+                        <option value="INDIA">INDIA</option>
+                        <option value="GERMANY">GERMANY</option>
+                        <option value="FRANCE">FRANCE</option>
+                        <option value="OTHER">OTHER NATION</option>
+                    </select>
+
+                    <select name="industry" class="panel-input" required>
+                        <option value="" disabled selected>SELECT INDUSTRY</option>
+                        <option value="COMMUNICATION/PHONE">COMMUNICATION/PHONE</option>
+                        <option value="COMPUTER RELATED">COMPUTER RELATED</option>
+                        <option value="PRODUCT/SERVICE">PRODUCT/SERVICE</option>
+                        <option value="CONSTRUCTION">CONSTRUCTION</option>
+                        <option value="EDUCATION">EDUCATION</option>
+                        <option value="ENGINEERING/ARCHITECTURE">ENGINEERING/ARCHITECTURE</option>
+                        <option value="ENTERTAINMENT">ENTERTAINMENT</option>
+                        <option value="GOVERNMENT">GOVERNMENT</option>
+                        <option value="HEALTHCARE">HEALTHCARE</option>
+                        <option value="HOSPITALITY">HOSPITALITY</option>
+                        <option value="LEGAL">LEGAL</option>
+                        <option value="INSURANCE">INSURANCE</option>
+                        <option value="MANUFACTURING">MANUFACTURING</option>
+                        <option value="MARKET RESEARCH">MARKET RESEARCH</option>
+                        <option value="MEDIA/MARKETING">MEDIA/MARKETING</option>
+                        <option value="MINING">MINING</option>
+                        <option value="PROFESSIONAL SERVICES">PROFESSIONAL SERVICES</option>
+                        <option value="PERSONAL SERVICES">PERSONAL SERVICES</option>
+                        <option value="PRINTING OR PUBLISHING">PRINTING OR PUBLISHING OF COMPUTER RELATED INDUSTRY INFORMATION</option>
+                        <option value="UTILITIES">UTILITIES</option>
+                        <option value="REAL ESTATE">REAL ESTATE</option>
+                        <option value="RETAIL">RETAIL</option>
+                        <option value="TRANSPORTATION">TRANSPORTATION</option>
+                        <option value="TECHNOLOGY/BPO">TECHNOLOGY/BPO</option>
+                        <option value="WHOLESALE">WHOLESALE</option>
+                        <option value="TELE COMMUNICATION">TELE COMMUNICATION</option>
+                        <option value="TRADE SERVICES">TRADE SERVICES</option>
+                        <option value="INFORMATION TECHNOLOGY">INFORMATION TECHNOLOGY</option>
+                        <option value="NON PROFIT">NON PROFIT</option>
+                        <option value="OTHERS">OTHERS</option>
+                        <option value="DON'T KNOW">DON'T KNOW</option>
+                    </select>
+
+                    <select name="panel_to_join" class="panel-input" required>
+                        <option value="" disabled selected>SELECT PANEL TO JOIN</option>
+                        <option value="CONSUMER">CONSUMER PANEL</option>
+                        <option value="B2B / EXECUTIVE">B2B / EXECUTIVE PANEL</option>
+                        <option value="HEALTHCARE">HEALTHCARE PANEL</option>
+                    </select>
+
+                    <textarea name="message" placeholder="ENTER YOUR MESSAGE" rows="3" class="panel-input"></textarea>
                 </div>
-                <button type="submit" class="w-full gradient-brand text-white py-4 rounded-xl font-bold uppercase text-xs tracking-widest shadow-lg shadow-brand/20 hover:brightness-110 transition-all">Submit Application</button>
+
+                <div class="pt-8">
+                    <button type="submit" class="w-full md:w-auto md:px-12 py-4 bg-[#5B89C3] hover:bg-[#4a72a5] text-white rounded font-bold uppercase text-xs tracking-widest transition-all">Submit</button>
+                </div>
             </form>
         </div>
     </div>
@@ -258,7 +339,7 @@
                     <a href="#vision" class="hover:text-brand transition-colors">Vision</a>
                     <a href="#quality" class="hover:text-brand transition-colors">Integrity</a>
                     <a href="#industries" class="hover:text-brand transition-colors">Sectors</a>
-                    <a href="#contact" class="hover:text-brand transition-colors">Contact</a>
+                    <a href="#faq" class="hover:text-brand transition-colors">FAQ</a>
                 </div>
                 
                 <div class="flex items-center gap-6 border-l border-slate-200 dark:border-slate-800 pl-8">
@@ -277,7 +358,7 @@
         </div>
     </nav>
 
-    <!-- 1. Hero Section (REDUCED HEIGHT + TRACKING) -->
+    <!-- 1. Hero Section -->
     <section class="relative h-auto pt-40 pb-20 lg:pt-52 lg:pb-32 overflow-hidden bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
             <div class="grid lg:grid-cols-2 gap-16 items-center mobile-center">
@@ -358,28 +439,110 @@
     <!-- 4. Pillar: Online Data Collection -->
     <section id="services" class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center">
+            <!-- Pillar 1 -->
+            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center mb-40">
                 <div class="gsap-reveal">
                     <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-6">Pillar 01</h3>
                     <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight italic">Online Data Collection.</h2>
                     <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium tracking-slight">
                         Leverage our proprietary panel of 1M+ double-opt-in members. We reach beyond general consumers into elite segments: C-suite executives, specialist HCPs, and niche B2B decision makers.
                     </p>
-                    <div class="flex gap-4 mobile-center">
-                        <div class="w-14 h-14 rounded-2xl gradient-brand flex items-center justify-center text-white shadow-xl shadow-brand/20">
-                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                    <div class="flex flex-wrap gap-12">
+                        <div class="space-y-2">
+                            <h5 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">50+</h5>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-premium">Nations Covered</p>
                         </div>
-                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-premium leading-tight py-2">Multi-Country <br>Global Fieldwork</p>
+                        <div class="space-y-2">
+                            <h5 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">CAWI</h5>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-premium">Primary Method</p>
+                        </div>
                     </div>
                 </div>
                 <div class="gsap-reveal">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Healthcare Analytics">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Data Collection">
+                </div>
+            </div>
+
+            <!-- Pillar 2: Survey Programming -->
+            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center mb-40">
+                <div class="gsap-reveal lg:order-2">
+                    <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-6">Pillar 02</h3>
+                    <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight italic">Survey Programming.</h2>
+                    <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium tracking-slight">
+                        We transform complex research designs into flawless digital experiences. From multi-country logic to high-engagement interactive elements, our scripting ensures maximum response rates.
+                    </p>
+                    <ul class="grid grid-cols-2 gap-4 text-[11px] font-bold uppercase tracking-premium text-slate-400">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-brand"></div> Decipher / Confirmit</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-brand"></div> Multi-Lingual Support</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-brand"></div> Mobile Optimization</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-brand"></div> Custom Interactive</li>
+                    </ul>
+                </div>
+                <div class="gsap-reveal lg:order-1">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Survey Programming">
+                </div>
+            </div>
+
+            <!-- Pillar 3: Data Analytics -->
+            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center">
+                <div class="gsap-reveal">
+                    <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-6">Pillar 03</h3>
+                    <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight italic">Processing & Analytics.</h2>
+                    <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium tracking-slight">
+                        Raw data is just the beginning. We distill millions of data points into actionable insights through advanced statistical modeling, visualization, and cross-tabulation.
+                    </p>
+                    <div class="flex gap-4">
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl">
+                            <p class="text-[10px] font-black text-brand uppercase tracking-premium mb-2">Deliverables</p>
+                            <p class="text-xs text-slate-500">SPSS, Excel, PowerBI Dashboards</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gsap-reveal">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Analytics">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 8. Sector Visual Grid (ROCK SOLID JITTER-FREE REDESIGN) -->
+    <!-- 5. Quality & Compliance Section -->
+    <section id="quality" class="py-40 bg-white dark:bg-slate-950">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-24 gsap-reveal">
+                <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-8">Research Integrity</h3>
+                <h2 class="text-4xl lg:text-6xl font-extrabold tracking-tight mb-8">The Clique Standard.</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-lg leading-relaxed font-medium">
+                    In an era of synthetic data, we prioritize authentic human response. Our multi-layer verification process ensures every data point represents a real person with a real opinion.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="gsap-reveal space-y-6">
+                    <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    </div>
+                    <h4 class="text-xl font-bold tracking-tight italic">Compliance First</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Full adherence to GDPR, CCPA, and ISO 20252 standards. Your data security and participant privacy are non-negotiable.</p>
+                </div>
+                <div class="gsap-reveal space-y-6">
+                    <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-4.44-2.03c1.164-2.072 1.807-4.463 1.807-6.991 0-4.135-1.722-7.862-4.485-10.512m14.53 4.53l-1.087-1.087m1.087 1.087l1.087 1.087m-1.087-1.087l1.087-1.087m-1.087 1.087l-1.087-1.087" /></svg>
+                    </div>
+                    <h4 class="text-xl font-bold tracking-tight italic">Digital Fingerprinting</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Proprietary technology to detect and eliminate duplicate entries, bot behavior, and fraudulent response patterns in real-time.</p>
+                </div>
+                <div class="gsap-reveal space-y-6">
+                    <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    </div>
+                    <h4 class="text-xl font-bold tracking-tight italic">Trap Questions</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Integrated red-herring questions and attention checks that filter out speeders and non-attentive participants instantly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Sector Visual Grid -->
     <section id="industries" class="py-32 bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-24 tracking-tight gsap-reveal">Vertical Specializations.</h2>
@@ -422,30 +585,27 @@
         </div>
     </section>
 
-    <!-- 9. Execution Path -->
-    <section id="process" class="py-32 bg-slate-50 dark:bg-slate-900/40 border-y border-slate-100 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-6 text-center mobile-center">
-            <h2 class="text-3xl font-extrabold mb-24 tracking-tight gsap-reveal">The Strategic Execution Cycle.</h2>
-            <div class="grid lg:grid-cols-4 gap-8">
-                <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 gsap-reveal hover:border-brand transition-all group">
-                    <div class="w-14 h-14 rounded-full gradient-brand text-white flex items-center justify-center font-black mx-auto mb-10 shadow-lg text-lg group-hover:scale-110 transition-transform">1</div>
-                    <h4 class="font-bold mb-4 tracking-tight text-xl">Discovery</h4>
-                    <p class="text-xs text-slate-500 uppercase font-black tracking-premium">Niche Mapping</p>
+    <!-- FAQ Section -->
+    <section id="faq" class="py-40 bg-slate-50 dark:bg-slate-900/50">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-24 tracking-tight gsap-reveal">Research Insights & FAQ.</h2>
+            
+            <div class="space-y-4 gsap-reveal">
+                <div class="faq-item">
+                    <h4 class="text-lg font-bold mb-4 italic tracking-tight">How do you verify your B2B respondents?</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Our B2B panelists undergo a rigorous multi-step verification, including LinkedIn profile matching, work email confirmation, and screening phone calls for high-incentive executive studies.</p>
                 </div>
-                <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 gsap-reveal hover:border-brand transition-all group">
-                    <div class="w-14 h-14 rounded-full bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-black mx-auto mb-10 shadow-lg text-lg group-hover:scale-110 transition-transform">2</div>
-                    <h4 class="font-bold mb-4 tracking-tight text-xl">Logic Build</h4>
-                    <p class="text-xs text-slate-500 uppercase font-black tracking-premium">Technical Scripting</p>
+                <div class="faq-item">
+                    <h4 class="text-lg font-bold mb-4 italic tracking-tight">What is your typical turnaround time for global fieldwork?</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Turnaround varies by niche, but standard consumer studies in Tier 1 markets usually complete within 3–5 business days. Niche B2B or Healthcare studies may take 10–14 days depending on the incidence rate.</p>
                 </div>
-                <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 gsap-reveal hover:border-brand transition-all group">
-                    <div class="w-14 h-14 rounded-full bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-black mx-auto mb-10 shadow-lg text-lg group-hover:scale-110 transition-transform">3</div>
-                    <h4 class="font-bold mb-4 tracking-tight text-xl">Acquire</h4>
-                    <p class="text-xs text-slate-500 uppercase font-black tracking-premium">Live Acquisition</p>
+                <div class="faq-item">
+                    <h4 class="text-lg font-bold mb-4 italic tracking-tight">Are you compliant with international data laws?</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Yes. Clique Survey is fully compliant with GDPR (Europe), CCPA (California), and PIPA (Asia). We maintain ISO 20252 certification for market and social research.</p>
                 </div>
-                <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 gsap-reveal hover:border-brand transition-all group">
-                    <div class="w-14 h-14 rounded-full bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-black mx-auto mb-10 shadow-lg text-lg group-hover:scale-110 transition-transform">4</div>
-                    <h4 class="font-bold mb-4 tracking-tight text-xl">Distill</h4>
-                    <p class="text-xs text-slate-500 uppercase font-black tracking-premium">Synthesis</p>
+                <div class="faq-item">
+                    <h4 class="text-lg font-bold mb-4 italic tracking-tight">Can you handle custom survey programming?</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Absolutely. Our in-house scripting team handles everything from basic logical flows to complex max-diff, conjoint analysis, and custom shelf tests using Decipher and Confirmit.</p>
                 </div>
             </div>
         </div>
@@ -506,7 +666,6 @@
             document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
         }
 
-        // Split text for staggered char animation
         function splitToChars(selector) {
             const el = document.querySelector(selector);
             if (!el) return;
@@ -514,7 +673,6 @@
             el.innerHTML = text.split('').map(char => `<span class="char-span">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
         }
 
-        // Split text for word mask animation
         function splitToWords(selector) {
             const el = document.querySelector(selector);
             if (!el) return;
@@ -523,11 +681,9 @@
         }
 
         window.onload = () => {
-            // Prep Text
             splitToChars('#animate-human');
             splitToWords('#animate-behavior');
 
-            // High-Performance Content Reveals
             gsap.utils.toArray(".gsap-reveal").forEach(el => {
                 gsap.fromTo(el, 
                     { opacity: 0, y: 30 },
@@ -545,7 +701,6 @@
                 );
             });
 
-            // "Human" Character Stagger (Hero)
             gsap.to("#animate-human .char-span", {
                 scrollTrigger: {
                     trigger: ".hero-content",
@@ -559,7 +714,6 @@
                 delay: 0.4
             });
 
-            // "Authentic Human Behavior" Word Reveal (Manifesto)
             gsap.to("#animate-behavior .text-mask-inner", {
                 scrollTrigger: {
                     trigger: ".manifesto-quote",
@@ -572,7 +726,6 @@
                 delay: 0.3
             });
 
-            // Dynamic Stats Counter
             gsap.utils.toArray(".count-up").forEach(el => {
                 const target = parseInt(el.getAttribute('data-target'));
                 gsap.to(el, {
