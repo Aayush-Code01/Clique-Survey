@@ -102,40 +102,47 @@
             background: linear-gradient(135deg, #FC6263 0%, #ff8e8f 100%);
         }
 
+        /* --- ENHANCED SPECIALIZATION CARDS --- */
         .specialization-card {
             position: relative;
             height: 520px;
             border-radius: 2.5rem;
             overflow: hidden;
-            transform: translate3d(0,0,0);
-            backface-visibility: hidden;
             background: #1e293b;
             cursor: pointer;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translate3d(0,0,0);
+            will-change: transform;
+        }
+
+        .specialization-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5);
+            z-index: 10;
         }
 
         .specialization-image-wrapper {
             position: absolute;
             inset: 0;
-            transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0) scale(1);
             will-change: transform;
-            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .specialization-card:hover .specialization-image-wrapper {
-            transform: scale(1.04) translate3d(0,0,0);
+            transform: scale(1.1);
         }
 
         .specialization-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(100%);
-            transition: filter 0.6s ease;
-            transform: translate3d(0,0,0);
+            filter: grayscale(100%) contrast(1.1);
+            transition: filter 0.8s ease;
         }
 
         .specialization-card:hover img {
-            filter: grayscale(0%);
+            filter: grayscale(0%) contrast(1);
         }
 
         .specialization-content {
@@ -144,13 +151,14 @@
             left: 0;
             right: 0;
             padding: 2.5rem;
-            background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 100%);
+            background: linear-gradient(to top, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.6) 50%, transparent 100%);
             transform: translate3d(0, 0, 0);
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 2;
         }
 
         .specialization-card:hover .specialization-content {
-            transform: translate3d(0, -10px, 0);
+            transform: translate3d(0, -5px, 0);
         }
 
         .bg-animate {
@@ -574,7 +582,7 @@
         </div>
     </section>
 
-    <!-- 2. Dynamic Intelligence Stats -->
+    <!-- 2. Stats Section -->
     <section class="py-24 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center mobile-center gsap-reveal">
@@ -621,7 +629,7 @@
         </div>
     </section>
 
-    <!-- 4. Pillar: Online Data Collection -->
+    <!-- 4. Pillar: Solutions -->
     <section id="services" class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Pillar 1 -->
@@ -648,7 +656,7 @@
                 </div>
             </div>
 
-            <!-- Pillar 2: Survey Programming -->
+            <!-- Pillar 2 -->
             <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center mb-40">
                 <div class="gsap-reveal lg:order-2">
                     <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-6">Pillar 02</h3>
@@ -668,7 +676,7 @@
                 </div>
             </div>
 
-            <!-- Pillar 3: Data Analytics -->
+            <!-- Pillar 3 -->
             <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center">
                 <div class="gsap-reveal">
                     <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-6">Pillar 03</h3>
@@ -690,44 +698,7 @@
         </div>
     </section>
 
-    <!-- 5. Quality & Compliance Section -->
-    <section id="quality" class="py-40 bg-white dark:bg-slate-950">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-24 gsap-reveal">
-                <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-8">Research Integrity</h3>
-                <h2 class="text-4xl lg:text-6xl font-extrabold tracking-tight mb-8">The Clique Standard.</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-lg leading-relaxed font-medium">
-                    In an era of synthetic data, we prioritize authentic human response. Our multi-layer verification process ensures every data point represents a real person with a real opinion.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="gsap-reveal space-y-6">
-                    <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                    </div>
-                    <h4 class="text-xl font-bold tracking-tight italic">Compliance First</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Full adherence to GDPR, CCPA, and ISO 20252 standards. Your data security and participant privacy are non-negotiable.</p>
-                </div>
-                <div class="gsap-reveal space-y-6">
-                    <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-4.44-2.03c1.164-2.072 1.807-4.463 1.807-6.991 0-4.135-1.722-7.862-4.485-10.512m14.53 4.53l-1.087-1.087m1.087 1.087l1.087 1.087m-1.087-1.087l1.087-1.087m-1.087 1.087l-1.087-1.087" /></svg>
-                    </div>
-                    <h4 class="text-xl font-bold tracking-tight italic">Digital Fingerprinting</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Proprietary technology to detect and eliminate duplicate entries, bot behavior, and fraudulent response patterns in real-time.</p>
-                </div>
-                <div class="gsap-reveal space-y-6">
-                    <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                    </div>
-                    <h4 class="text-xl font-bold tracking-tight italic">Trap Questions</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Integrated red-herring questions and attention checks that filter out speeders and non-attentive participants instantly.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. Sector Visual Grid -->
+    <!-- Vertical Specializations -->
     <section id="industries" class="py-32 bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-24 tracking-tight gsap-reveal">Vertical Specializations.</h2>
@@ -796,7 +767,7 @@
         </div>
     </section>
 
-    <!-- 12. Final Contact Section -->
+    <!-- Contact Section -->
     <section id="contact" class="py-40 bg-white dark:bg-slate-950 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="grid lg:grid-cols-2 gap-24 mobile-center">
