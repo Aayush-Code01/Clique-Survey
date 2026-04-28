@@ -38,11 +38,15 @@
             }
         }
 
+        // Initialize Theme - DEFAULT TO DARK
         function initTheme() {
-            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
+            if (localStorage.getItem('color-theme') === 'light') {
                 document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+                if (!localStorage.getItem('color-theme')) {
+                    localStorage.setItem('color-theme', 'dark');
+                }
             }
         }
         initTheme();
@@ -91,7 +95,6 @@
                 object-fit: contain;
             }
             
-            /* Pointer reset for interactives but still hiding system cursor */
             a, button, [onclick], select, summary, .specialization-card, .faq-header {
                 cursor: none;
             }
@@ -139,7 +142,7 @@
         /* --- ENHANCED SPECIALIZATION CARDS --- */
         .specialization-card {
             position: relative;
-            height: 400px; /* Reduced for mobile visibility */
+            height: 400px;
             width: 100%;
             border-radius: 2.5rem;
             overflow: hidden;
@@ -604,6 +607,19 @@
         </div>
     </div>
 
+    <!-- SPECIALIZATION DETAIL MODAL -->
+    <div id="specModal" class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-950/90 backdrop-blur-xl" onclick="closeSpecModal()"></div>
+        <div class="relative bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl shadow-2xl p-8 md:p-14 border border-white/5 overflow-y-auto max-h-[90vh]">
+            <button onclick="closeSpecModal()" class="absolute top-8 right-8 text-slate-400 hover:text-brand transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div id="specModalContent">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation Header -->
     <nav class="fixed w-full z-50 glass-nav border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 h-20 flex items-center">
         <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
@@ -796,7 +812,7 @@
             <div class="grid lg:grid-cols-3 gap-8 mobile-grid-center">
                 
                 <!-- B2B Card -->
-                <div class="specialization-card group gsap-reveal">
+                <div class="specialization-card group gsap-reveal" onclick="openSpecModal('b2b')">
                     <div class="specialization-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="B2B Tech">
                     </div>
@@ -807,7 +823,7 @@
                 </div>
 
                 <!-- FMCG Card -->
-                <div class="specialization-card group gsap-reveal" style="transition-delay: 0.1s">
+                <div class="specialization-card group gsap-reveal" style="transition-delay: 0.1s" onclick="openSpecModal('fmcg')">
                     <div class="specialization-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000" alt="FMCG">
                     </div>
@@ -818,7 +834,7 @@
                 </div>
 
                 <!-- Healthcare Card -->
-                <div class="specialization-card group gsap-reveal" style="transition-delay: 0.2s">
+                <div class="specialization-card group gsap-reveal" style="transition-delay: 0.2s" onclick="openSpecModal('healthcare')">
                     <div class="specialization-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" alt="Healthcare">
                     </div>
@@ -983,6 +999,59 @@
             document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
         }
 
+        /* --- SPECIALIZATION MODAL LOGIC --- */
+        const specData = {
+            b2b: {
+                title: 'B2B & Technology Intelligence',
+                content: 'Access a global network of high-value decision makers. From C-Suite executives to niche IT specialists, we provide authenticated behavioral data to fuel your strategic decisions.',
+                features: ['IT Decision Makers', 'HR & Finance Directors', 'Small Business Owners', 'Verified LinkedIn Profiles']
+            },
+            fmcg: {
+                title: 'FMCG & Consumer Dynamics',
+                content: 'Understand global consumer sentiment with granular accuracy. Our FMCG specialists map brand behavior, usage patterns, and attitude shifts across 50+ countries.',
+                features: ['Usage & Attitude Studies', 'Brand Health Tracking', 'Packaging & Shelf Testing', 'Path-to-Purchase Mapping']
+            },
+            healthcare: {
+                title: 'Healthcare & Life Sciences',
+                content: 'Navigate the complex healthcare landscape with access to specialist HCPs and patient populations. Our healthcare intelligence is fully compliant with global medical data privacy standards.',
+                features: ['Oncologists & Cardiologists', 'Niche Patient Panels', 'Hospital Administrators', 'GDPR/HIPAA Compliance']
+            }
+        };
+
+        function openSpecModal(type) {
+            const data = specData[type];
+            const modal = document.getElementById('specModal');
+            const content = document.getElementById('specModalContent');
+            
+            content.innerHTML = `
+                <h3 class="text-xs font-black text-brand uppercase tracking-premium mb-6">${type} vertical</h3>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-8 tracking-tight">${data.title}</h2>
+                <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed">${data.content}</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+                    ${data.features.map(f => `
+                        <div class="flex items-center gap-3 text-[11px] font-bold uppercase tracking-premium text-slate-400">
+                            <div class="w-1.5 h-1.5 rounded-full bg-brand"></div> ${f}
+                        </div>
+                    `).join('')}
+                </div>
+                <button onclick="scrollToRFQ()" class="gradient-brand text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl shadow-brand/20 hover:scale-105 transition-all">Start Project with us</button>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSpecModal() {
+            const modal = document.getElementById('specModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function scrollToRFQ() {
+            closeSpecModal();
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
         /* FAQ Toggle Function */
         function toggleFaq(header) {
             const item = header.parentElement;
@@ -1007,12 +1076,11 @@
             splitToChars('#animate-human');
             splitToWords('#animate-behavior');
 
-            /* --- UPDATED CUSTOM BRAND CURSOR --- */
+            /* --- SIMPLIFIED CUSTOM BRAND CURSOR --- */
             if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
                 const cursor = document.getElementById('cursor-brand');
 
                 window.addEventListener('mousemove', (e) => {
-                    // Tip of the custom SVG aligns with the real pointer
                     gsap.to(cursor, { x: e.clientX, y: e.clientY, opacity: 1, duration: 0 });
                 });
                 
