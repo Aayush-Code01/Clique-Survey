@@ -690,7 +690,7 @@
                 
                 <div class="hero-visual gsap-reveal">
                     <div class="relative group aspect-square lg:aspect-video w-full">
-                        <!-- Background Video Replace Header Image -->
+                        <!-- Background Video -->
                         <video autoplay muted loop playsinline class="w-full h-full object-cover rounded-[3rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-transform duration-1000 group-hover:scale-[1.02]">
                             <source src="https://www.pexels.com/download/video/1851190/" type="video/mp4">
                             Your browser does not support the video tag.
@@ -826,7 +826,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center max-w-3xl mx-auto mb-24 gsap-reveal">
                 <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-8">Research Integrity</h3>
-                <h2 class="text-4xl lg:text-6xl font-extrabold tracking-tight mb-8">The Clique Standard.</h2>
+                <h2 class="text-4xl lg:text-6xl font-extrabold tracking-tight mb-8">The <span id="animate-clique" class="text-brand">Clique</span> Standard.</h2>
                 <p class="text-slate-500 dark:text-slate-400 text-lg leading-relaxed font-medium">
                     In an era of synthetic data, we prioritize authentic human response. Our multi-layer verification process ensures every data point represents a real person with a real opinion.
                 </p>
@@ -1128,6 +1128,7 @@
         window.onload = () => {
             splitToChars('#animate-human');
             splitToWords('#animate-behavior');
+            splitToChars('#animate-clique');
 
             /* --- SIMPLIFIED CUSTOM BRAND CURSOR --- */
             if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
@@ -1182,6 +1183,19 @@
                 stagger: 0.08,
                 ease: "power3.out",
                 delay: 0.3
+            });
+
+            gsap.to("#animate-clique .char-span", {
+                scrollTrigger: {
+                    trigger: "#quality",
+                    start: "top 70%"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "power2.out",
+                delay: 0.2
             });
 
             gsap.utils.toArray(".count-up").forEach(el => {
