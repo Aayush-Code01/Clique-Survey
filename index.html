@@ -58,7 +58,7 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        .gsap-reveal { opacity: 0; transform: translateY(20px); }
+        .gsap-reveal { opacity: 0; }
 
         .glass-nav {
             backdrop-filter: blur(16px);
@@ -84,7 +84,15 @@
             background: linear-gradient(135deg, #FC6263 0%, #ff8e8f 100%);
         }
 
-        /* Animated Background Gradients (X-Factor) */
+        /* Anti-Jitter Fix for cards */
+        .card-image-container img {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* Animated Background Gradients */
         .bg-animate {
             background: radial-gradient(circle at 50% 50%, rgba(252, 98, 99, 0.03) 0%, transparent 50%),
                         radial-gradient(circle at 10% 10%, rgba(252, 98, 99, 0.02) 0%, transparent 30%);
@@ -119,11 +127,16 @@
         
         h1, h2, h3, h4 { letter-spacing: -0.02em; }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        
+        /* Word Highlight Animation Initial State */
+        .highlight-span {
+            display: inline-block;
+            position: relative;
+        }
     </style>
 </head>
 <body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden bg-animate">
@@ -199,19 +212,19 @@
         </div>
     </nav>
 
-    <!-- 1. Hero Section -->
-    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-white dark:bg-slate-950">
+    <!-- 1. Hero Section (REDUCED HEIGHT) -->
+    <section class="relative h-auto pt-40 pb-20 lg:pt-52 lg:pb-32 overflow-hidden bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
             <div class="grid lg:grid-cols-2 gap-16 items-center mobile-center">
-                <div class="hero-content gsap-reveal">
-                    <h1 class="text-5xl lg:text-8xl font-extrabold text-slate-900 dark:text-white leading-[0.95] tracking-tighter mb-8">
+                <div class="hero-content">
+                    <h1 class="text-5xl lg:text-8xl font-extrabold text-slate-900 dark:text-white leading-[0.95] tracking-tighter mb-8 gsap-reveal">
                         Global Data.<br>
-                        <span class="text-brand italic underline decoration-slate-100 dark:decoration-slate-800">Human</span> Truth.
+                        <span class="text-brand italic underline decoration-slate-100 dark:decoration-slate-800 animate-target-word">Human</span> Truth.
                     </h1>
-                    <p class="text-lg lg:text-xl text-slate-500 dark:text-slate-400 mb-10 leading-relaxed max-w-xl font-medium">
+                    <p class="text-lg lg:text-xl text-slate-500 dark:text-slate-400 mb-10 leading-relaxed max-w-xl font-medium gsap-reveal">
                         Clique Survey builds the infrastructure for human-verified intelligence. We bridge the gap between global consumer behavior and high-fidelity intelligence across 50+ countries.
                     </p>
-                    <div class="flex flex-wrap gap-5 mobile-center">
+                    <div class="flex flex-wrap gap-5 mobile-center gsap-reveal">
                         <a href="#services" class="gradient-brand text-white px-10 py-4 font-bold text-xs uppercase tracking-widest rounded-full shadow-xl shadow-brand/20 hover:scale-105 transition-all">Explore Solutions</a>
                         <button onclick="toggleModal()" class="bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 px-10 py-4 font-bold text-xs uppercase tracking-widest rounded-full hover:border-brand transition-all">Join Panel</button>
                     </div>
@@ -254,7 +267,7 @@
         </div>
     </section>
 
-    <!-- 3. Leadership Vision (Pillar Imagery) -->
+    <!-- 3. Leadership Vision -->
     <section id="vision" class="py-40 bg-white dark:bg-slate-950 overflow-hidden relative">
         <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center mobile-center">
             <div class="gsap-reveal">
@@ -266,7 +279,7 @@
             <div class="gsap-reveal">
                 <h2 class="text-xs font-bold text-brand uppercase tracking-[0.5em] mb-12">The CEO Manifesto</h2>
                 <blockquote class="text-3xl lg:text-5xl font-light text-slate-800 dark:text-slate-100 leading-tight tracking-tight italic">
-                    "Data is the silent language of the consumer. At Clique Survey, our ambition is to anchor boardroom decisions in <span class="text-brand font-medium underline decoration-brand/20">authentic human behavior</span>, eliminating the noise to find the signal."
+                    "Data is the silent language of the consumer. At Clique Survey, our ambition is to anchor boardroom decisions in <span class="text-brand font-medium underline decoration-brand/20 animate-target-phrase">authentic human behavior</span>, eliminating the noise to find the signal."
                 </blockquote>
                 <div class="mt-12 flex items-center gap-6 mobile-center">
                     <div class="w-16 h-px bg-brand"></div>
@@ -300,7 +313,7 @@
         </div>
     </section>
 
-    <!-- 5. Pillar: Programming & Hosting -->
+    <!-- 5. Pillar: Technical Engineering -->
     <section class="py-32 bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center">
@@ -324,79 +337,27 @@
         </div>
     </section>
 
-    <!-- 6. Pillar: Data Processing -->
-    <section class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center">
-                <div class="gsap-reveal">
-                    <h3 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-6">Pillar 03</h3>
-                    <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tighter italic">Processing & Analytics.</h2>
-                    <p class="text-lg text-slate-500 dark:text-slate-400 mb-8 font-medium leading-relaxed">
-                        Raw data is a liability; cleaned data is an asset. Our team employs rigorous statistical cleaning, weighting, and tabulation using SPSS and Quantum, translating raw inputs into visual strategic intelligence.
-                    </p>
-                    <div class="flex gap-4 mobile-center">
-                        <div class="w-14 h-14 rounded-2xl gradient-brand flex items-center justify-center text-white shadow-xl shadow-brand/20"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg></div>
-                        <div class="w-14 h-14 rounded-xl bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white shadow-xl"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div>
-                    </div>
-                </div>
-                <div class="gsap-reveal">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Analytics">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. Integrity Wall -->
-    <section id="quality" class="py-40 bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden">
-        <div class="absolute bottom-0 right-0 w-1/3 h-1/2 gradient-brand opacity-10 blur-[120px]"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10 mobile-center">
-            <div class="text-center mb-20 gsap-reveal">
-                <h2 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-10 text-center">Quality Architecture</h2>
-                <h3 class="text-4xl lg:text-6xl font-extrabold mb-10 tracking-tighter text-center italic">Integrity without compromise.</h3>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-10 gsap-reveal">
-                <div class="text-center mobile-center p-8 bg-white/5 border border-white/10 rounded-2xl">
-                    <div class="text-3xl font-black text-brand mb-2 italic">DOI</div>
-                    <h4 class="font-bold text-xs uppercase tracking-widest text-slate-400">Verified Panels</h4>
-                </div>
-                <div class="text-center mobile-center p-8 bg-white/5 border border-white/10 rounded-2xl">
-                    <div class="text-3xl font-black text-brand mb-2 italic">BOT</div>
-                    <h4 class="font-bold text-xs uppercase tracking-widest text-slate-400">Fingerprinting</h4>
-                </div>
-                <div class="text-center mobile-center p-8 bg-white/5 border border-white/10 rounded-2xl">
-                    <div class="text-3xl font-black text-brand mb-2 italic">GEO</div>
-                    <h4 class="font-bold text-xs uppercase tracking-widest text-slate-400">IP Scrubbing</h4>
-                </div>
-                <div class="text-center mobile-center p-8 bg-white/5 border border-white/10 rounded-2xl">
-                    <div class="text-3xl font-black text-brand mb-2 italic">TIME</div>
-                    <h4 class="font-bold text-xs uppercase tracking-widest text-slate-400">Speeder Checks</h4>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. Sector Visual Grid -->
+    <!-- 8. Sector Visual Grid (FIXED JITTER) -->
     <section id="industries" class="py-32 bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-24 tracking-tighter gsap-reveal">Vertical Specializations.</h2>
             <div class="grid lg:grid-cols-3 gap-8 mobile-grid-center">
-                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110">
+                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal card-image-container">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
                         <h4 class="text-3xl font-bold text-white mb-2 italic">B2B / Tech</h4>
                         <p class="text-slate-400 text-sm">C-Suite and technical specialist access worldwide.</p>
                     </div>
                 </div>
-                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal" style="transition-delay: 0.1s">
-                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110">
+                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal card-image-container" style="transition-delay: 0.1s">
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
                         <h4 class="text-3xl font-bold text-white mb-4 italic">FMCG</h4>
                         <p class="text-slate-400 text-sm">Global brand behavior and sentiment mapping.</p>
                     </div>
                 </div>
-                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal" style="transition-delay: 0.2s">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110">
+                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal card-image-container" style="transition-delay: 0.2s">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
                         <h4 class="text-3xl font-bold text-white mb-4 italic">Healthcare</h4>
                         <p class="text-slate-400 text-sm">Specialized HCP and patient intelligence.</p>
@@ -435,44 +396,6 @@
         </div>
     </section>
 
-    <!-- 10. Certifications wall -->
-    <section class="py-24 bg-white dark:bg-slate-950 text-center opacity-40 flex flex-wrap justify-center gap-16 grayscale mobile-center gsap-reveal">
-        <span class="text-xl font-black italic tracking-widest text-slate-400">ISO 20252:2019</span>
-        <span class="text-xl font-black italic tracking-widest text-slate-400">ESOMAR MEMBER</span>
-        <span class="text-xl font-black italic tracking-widest text-slate-400">GDPR READY</span>
-        <span class="text-xl font-black italic tracking-widest text-slate-400">HIPAA COMPLIANT</span>
-    </section>
-
-    <!-- 11. FAQ Insights -->
-    <section id="faq" class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
-        <div class="max-w-4xl mx-auto px-6 mobile-center">
-            <h2 class="text-3xl lg:text-4xl font-extrabold mb-16 text-center tracking-tighter gsap-reveal">Intelligence Insights (FAQ)</h2>
-            <div class="space-y-6">
-                <details class="group bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 gsap-reveal cursor-pointer hover:border-brand transition-all">
-                    <summary class="list-none flex justify-between items-center font-bold text-slate-900 dark:text-white text-lg">
-                        Global Fieldwork Reach & Panels
-                        <span class="text-brand transition-transform group-open:rotate-180 font-black text-xl">↓</span>
-                    </summary>
-                    <p class="mt-6 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">We maintain a proprietary pool of 1M+ members across Asia, Americas, Europe, and the Middle East, with specialized focus on niche sectors.</p>
-                </details>
-                <details class="group bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 gsap-reveal cursor-pointer hover:border-brand transition-all">
-                    <summary class="list-none flex justify-between items-center font-bold text-slate-900 dark:text-white text-lg">
-                        Turnaround Times (TAT)
-                        <span class="text-brand transition-transform group-open:rotate-180 font-black text-xl">↓</span>
-                    </summary>
-                    <p class="mt-6 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Our agile infrastructure allows for 24-hour setup on standardized studies and rapid acquisition for global trackers.</p>
-                </details>
-                <details class="group bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 gsap-reveal cursor-pointer hover:border-brand transition-all">
-                    <summary class="list-none flex justify-between items-center font-bold text-slate-900 dark:text-white text-lg">
-                        Complex Logic Support
-                        <span class="text-brand transition-transform group-open:rotate-180 font-black text-xl">↓</span>
-                    </summary>
-                    <p class="mt-6 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">We support full Conjoint, MaxDiff, and advanced Heatmapping within our CAWI framework to deconstruct respondent preferences.</p>
-                </details>
-            </div>
-        </div>
-    </section>
-
     <!-- 12. Final Contact Section -->
     <section id="contact" class="py-40 bg-white dark:bg-slate-950 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
@@ -483,10 +406,6 @@
                         <div class="flex items-center gap-8 mobile-center flex-col md:flex-row">
                             <div class="w-16 h-16 rounded-full gradient-brand flex items-center justify-center text-white shadow-xl shadow-brand/20"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg></div>
                             <span class="text-2xl font-bold tracking-tight">sales@cliquesurvey.com</span>
-                        </div>
-                        <div class="flex items-center gap-8 mobile-center flex-col md:flex-row">
-                            <div class="w-16 h-16 rounded-full bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white shadow-xl"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
-                            <span class="text-xl font-bold tracking-tight text-center">Gurugram, Haryana, India</span>
                         </div>
                     </div>
                 </div>
@@ -510,18 +429,10 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col lg:flex-row justify-between items-center gap-12 mb-16">
                 <img src="https://cliquesurvey.com/images/Untitled.svg" alt="Clique" class="h-10 w-auto transition-transform hover:scale-110">
-                <div class="flex flex-wrap justify-center gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
-                    <a href="#" class="hover:text-brand transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-brand transition-colors">GDPR Transparency</a>
-                    <a href="#" class="hover:text-brand transition-colors">Terms</a>
-                </div>
                 <div class="text-[10px] font-bold text-slate-300 dark:text-slate-700 tracking-tighter uppercase">
                     © 2026 Clique Survey Private Limited. All Rights Reserved.
                 </div>
             </div>
-            <p class="text-center pt-10 border-t border-slate-50 dark:border-slate-900 text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-relaxed">
-                HQ: 752, Sector 42, Gurugram, Haryana, India 122002.
-            </p>
         </div>
     </footer>
 
@@ -541,23 +452,57 @@
         }
 
         window.onload = () => {
-            // Speed optimization: Ensure content is visible immediately
-            gsap.set(".gsap-reveal, .hero-content, .hero-visual", { opacity: 1, y: 0 });
-
-            // High-Performance Batch Reveal
-            gsap.utils.toArray(".gsap-reveal, .reveal").forEach(el => {
-                gsap.from(el, {
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 92%",
-                        toggleActions: "play none none none"
-                    },
-                    opacity: 0,
-                    y: 40,
-                    duration: 1.2,
-                    ease: "power3.out"
-                });
+            // High-Performance Reveal Animations
+            gsap.utils.toArray(".gsap-reveal").forEach(el => {
+                gsap.fromTo(el, 
+                    { opacity: 0, y: 30 },
+                    {
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 92%",
+                            toggleActions: "play none none none"
+                        },
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: "power3.out"
+                    }
+                );
             });
+
+            // "Human" Word Entry Animation
+            gsap.fromTo(".animate-target-word", 
+                { scale: 0.9, opacity: 0, color: "#94a3b8" },
+                {
+                    scrollTrigger: {
+                        trigger: ".hero-content",
+                        start: "top 60%"
+                    },
+                    scale: 1,
+                    opacity: 1,
+                    color: "#FC6263",
+                    duration: 1.5,
+                    delay: 0.4,
+                    ease: "elastic.out(1, 0.5)"
+                }
+            );
+
+            // "Authentic Human Behavior" Entry Animation
+            gsap.fromTo(".animate-target-phrase", 
+                { y: 10, opacity: 0 },
+                {
+                    scrollTrigger: {
+                        trigger: "#vision",
+                        start: "top 70%"
+                    },
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    delay: 0.2,
+                    ease: "power2.out",
+                    stagger: 0.1
+                }
+            );
 
             // Statistics Counter
             gsap.utils.toArray(".count-up").forEach(el => {
