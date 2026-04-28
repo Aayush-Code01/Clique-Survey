@@ -84,6 +84,17 @@
             background: linear-gradient(135deg, #FC6263 0%, #ff8e8f 100%);
         }
 
+        /* Animated Background Gradients (X-Factor) */
+        .bg-animate {
+            background: radial-gradient(circle at 50% 50%, rgba(252, 98, 99, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 10% 10%, rgba(252, 98, 99, 0.02) 0%, transparent 30%);
+            animation: gradientMove 15s infinite alternate ease-in-out;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
         @media (max-width: 1024px) {
             .mobile-center {
                 text-align: center !important;
@@ -98,57 +109,60 @@
             }
         }
 
-        #mobileMenu {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s linear;
+        #mobileMenuOverlay {
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
             transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none;
         }
-        #mobileMenu.open {
+        #mobileMenuOverlay.active {
             transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
         }
         
-        h1, h2, h3, h4 { letter-spacing: 0.01em; }
+        h1, h2, h3, h4 { letter-spacing: -0.02em; }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
     </style>
 </head>
-<body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden">
+<body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden bg-animate">
 
     <!-- MOBILE MENU OVERLAY -->
-    <div id="mobileMenu" class="fixed inset-0 z-[60] bg-white dark:bg-slate-950 flex flex-col items-center justify-center space-y-8 p-10 lg:hidden">
+    <div id="mobileMenuOverlay" class="fixed inset-0 z-[100] bg-white dark:bg-slate-950 flex flex-col items-center justify-center space-y-8 p-10 lg:hidden">
         <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-slate-500">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
-        <a href="#vision" onclick="toggleMobileMenu()" class="text-2xl font-bold uppercase tracking-widest hover:text-brand">Vision</a>
-        <a href="#services" onclick="toggleMobileMenu()" class="text-2xl font-bold uppercase tracking-widest hover:text-brand">Services</a>
-        <a href="#quality" onclick="toggleMobileMenu()" class="text-2xl font-bold uppercase tracking-widest hover:text-brand">Quality</a>
-        <a href="#industries" onclick="toggleMobileMenu()" class="text-2xl font-bold uppercase tracking-widest hover:text-brand">Industries</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="text-2xl font-bold uppercase tracking-widest hover:text-brand">Contact</a>
-        <button onclick="toggleModal(); toggleMobileMenu();" class="gradient-brand text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest shadow-xl">Join Panel</button>
+        <a href="#vision" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Vision</a>
+        <a href="#services" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Services</a>
+        <a href="#quality" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Integrity</a>
+        <a href="#industries" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Sectors</a>
+        <a href="#faq" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Insights</a>
+        <button onclick="toggleModal(); toggleMobileMenu();" class="gradient-brand text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest shadow-xl shadow-brand/20">Join Global Panel</button>
     </div>
 
     <!-- JOIN PANEL MODAL -->
-    <div id="panelModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-sm" onclick="toggleModal()"></div>
+    <div id="panelModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onclick="toggleModal()"></div>
         <div class="relative bg-white dark:bg-slate-900 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl p-8 md:p-12 border border-white/5">
             <button onclick="toggleModal()" class="absolute top-6 right-6 text-slate-400 hover:text-brand transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
-            <h2 class="text-3xl font-bold text-brand mb-8 text-center tracking-tight">Join Our Global Panel</h2>
+            <h2 class="text-3xl font-bold text-brand mb-8 text-center tracking-tight">Global Panel Membership</h2>
             <form action="https://formspree.io/f/sales@cliquesurvey.com" method="POST" class="space-y-6">
+                <input type="hidden" name="_subject" value="New Panel Application - Clique Survey">
                 <div class="grid gap-6">
-                    <input type="text" name="name" placeholder="ENTER YOUR NAME" class="panel-input" required>
-                    <select name="gender" class="panel-input"><option>SELECT GENDER</option><option>MALE</option><option>FEMALE</option><option>OTHER</option></select>
-                    <input type="email" name="email" placeholder="ENTER A VALID EMAIL ADDRESS" class="panel-input" required>
+                    <input type="text" name="name" placeholder="FULL NAME" class="panel-input" required>
+                    <select name="gender" class="panel-input"><option>GENDER</option><option>MALE</option><option>FEMALE</option><option>OTHER</option></select>
+                    <input type="email" name="email" placeholder="EMAIL ADDRESS" class="panel-input" required>
                     <div class="grid md:grid-cols-2 gap-6">
                         <input type="tel" name="phone" placeholder="PHONE" class="panel-input">
                         <input type="text" name="zip" placeholder="POSTAL CODE" class="panel-input">
                     </div>
-                    <select name="industry" class="panel-input"><option>SELECT INDUSTRY</option><option>HEALTHCARE</option><option>TECHNOLOGY</option><option>RETAIL</option></select>
-                    <textarea name="message" placeholder="ANY MESSAGE?" rows="2" class="panel-input"></textarea>
+                    <select name="panel_type" class="panel-input"><option>SELECT PANEL</option><option>CONSUMER</option><option>B2B / EXEC</option><option>HEALTHCARE</option></select>
+                    <textarea name="message" placeholder="MESSAGE" rows="2" class="panel-input"></textarea>
                 </div>
-                <button type="submit" class="w-full gradient-brand text-white py-4 rounded-lg font-bold uppercase text-xs tracking-widest hover:brightness-110 transition-all shadow-lg shadow-brand/20">Submit Application</button>
+                <button type="submit" class="w-full gradient-brand text-white py-4 rounded-xl font-bold uppercase text-xs tracking-widest shadow-lg shadow-brand/20 hover:brightness-110 transition-all">Submit Application</button>
             </form>
         </div>
     </div>
@@ -157,168 +171,176 @@
     <nav class="fixed w-full z-50 glass-nav border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 h-20 flex items-center">
         <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
             <a href="#" class="flex items-center gap-3">
-                <img src="https://cliquesurvey.com/images/Untitled.svg" alt="Clique Survey" class="h-10 w-auto">
+                <img src="https://cliquesurvey.com/images/Untitled.svg" alt="Clique Survey" class="h-9 md:h-10 w-auto transition-transform hover:scale-105">
             </a>
             
             <div class="hidden lg:flex items-center gap-10">
                 <div class="flex gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                    <a href="#services" class="hover:text-brand transition-colors">Solutions</a>
                     <a href="#vision" class="hover:text-brand transition-colors">Vision</a>
-                    <a href="#services" class="hover:text-brand transition-colors">Intelligence</a>
-                    <a href="#quality" class="hover:text-brand transition-colors">Trust</a>
+                    <a href="#quality" class="hover:text-brand transition-colors">Integrity</a>
+                    <a href="#industries" class="hover:text-brand transition-colors">Sectors</a>
                     <a href="#contact" class="hover:text-brand transition-colors">Contact</a>
                 </div>
                 
                 <div class="flex items-center gap-6 border-l border-slate-200 dark:border-slate-800 pl-8">
-                    <button onclick="toggleTheme()" class="text-slate-500 hover:text-brand transition-colors p-2 rounded-lg bg-slate-100 dark:bg-slate-900 transition-all">
-                        <svg id="theme-icon-light" class="w-4 h-4 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
-                        <svg id="theme-icon-dark" class="w-4 h-4 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <button onclick="toggleTheme()" class="text-slate-500 hover:text-brand transition-colors p-2 rounded-lg bg-slate-100 dark:bg-slate-900 transition-all active:scale-90">
+                        <svg class="w-4 h-4 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg class="w-4 h-4 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
                     </button>
-                    <button onclick="toggleModal()" class="text-[10px] font-bold uppercase tracking-widest text-slate-600 dark:text-slate-300 hover:text-brand transition-all">Join Panel</button>
+                    <button onclick="toggleModal()" class="text-[10px] font-bold uppercase tracking-widest text-slate-600 dark:text-slate-300 hover:text-brand">Join Panel</button>
                     <a href="#contact" class="text-[10px] font-bold uppercase tracking-widest bg-brand text-white px-7 py-3 rounded-full shadow-lg shadow-brand/20 hover:brightness-110 transition-all">Start Project</a>
                 </div>
             </div>
             
-            <button class="lg:hidden text-slate-500 hover:text-brand transition-all p-2" onclick="toggleMobileMenu()">
+            <button class="lg:hidden text-slate-500 p-2 transition-all active:scale-90" onclick="toggleMobileMenu()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
             </button>
         </div>
     </nav>
 
     <!-- 1. Hero Section -->
-    <section class="relative pt-48 pb-32 overflow-hidden bg-white dark:bg-slate-950">
-        <div class="absolute top-0 right-0 w-3/4 h-full bg-brand-soft blur-[100px] -z-0 opacity-40"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-white dark:bg-slate-950">
+        <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
             <div class="grid lg:grid-cols-2 gap-16 items-center mobile-center">
-                <div class="hero-content">
-                    <h1 class="text-4xl lg:text-7xl font-extrabold text-slate-900 dark:text-white leading-[1.1] mb-8">
+                <div class="hero-content gsap-reveal">
+                    <h1 class="text-5xl lg:text-8xl font-extrabold text-slate-900 dark:text-white leading-[0.95] tracking-tighter mb-8">
                         Global Data.<br>
-                        <span class="text-brand italic">Human Truth.</span>
+                        <span class="text-brand italic underline decoration-slate-100 dark:decoration-slate-800">Human</span> Truth.
                     </h1>
-                    <p class="text-lg lg:text-xl text-slate-500 dark:text-slate-400 mb-10 leading-relaxed max-w-xl">
-                        Clique Survey is the definitive technical partner for global market research. We transform human behavior into high-fidelity intelligence across 50+ countries.
+                    <p class="text-lg lg:text-xl text-slate-500 dark:text-slate-400 mb-10 leading-relaxed max-w-xl font-medium">
+                        Clique Survey builds the infrastructure for human-verified intelligence. We bridge the gap between global consumer behavior and high-fidelity intelligence across 50+ countries.
                     </p>
-                    <div class="flex flex-wrap gap-6 mobile-center">
-                        <a href="#services" class="gradient-brand text-white px-10 py-4 font-bold text-xs uppercase tracking-widest rounded-full shadow-xl hover:scale-105 transition-all">Explore Solutions</a>
-                        <button onclick="toggleModal()" class="bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 px-10 py-4 font-bold text-xs uppercase tracking-widest rounded-full hover:border-brand hover:text-brand transition-all">Join Our Panel</button>
+                    <div class="flex flex-wrap gap-5 mobile-center">
+                        <a href="#services" class="gradient-brand text-white px-10 py-4 font-bold text-xs uppercase tracking-widest rounded-full shadow-xl shadow-brand/20 hover:scale-105 transition-all">Explore Solutions</a>
+                        <button onclick="toggleModal()" class="bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 px-10 py-4 font-bold text-xs uppercase tracking-widest rounded-full hover:border-brand transition-all">Join Panel</button>
                     </div>
                 </div>
                 
-                <div class="hero-visual">
-                    <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100 dark:border-white/5">
-                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200" alt="Market Intelligence" class="w-full h-auto">
-                        <div class="absolute inset-0 bg-brand/5"></div>
+                <div class="hero-visual gsap-reveal">
+                    <div class="relative group">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000" class="rounded-[3rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-transform duration-1000 group-hover:scale-[1.02]" alt="Global Data Hub">
+                        <div class="absolute -bottom-6 -left-6 bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 hidden md:block">
+                            <div class="text-4xl font-black text-brand count-up" data-target="1000000">0</div>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Verified Respondents</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 2. Strategic Intelligence Stats -->
-    <section class="py-20 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
+    <!-- 2. Dynamic Intelligence Stats -->
+    <section class="py-24 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center reveal">
-                <div class="mobile-center">
-                    <div class="text-4xl font-black text-slate-900 dark:text-white count-up tracking-tighter" data-target="1000000">0</div>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">Verified Panelists</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center mobile-center gsap-reveal">
+                <div>
+                    <div class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white count-up tracking-tighter" data-target="1000000">0</div>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-3">Verified Panelists</p>
                 </div>
-                <div class="mobile-center">
-                    <div class="text-4xl font-black text-slate-900 dark:text-white count-up tracking-tighter" data-target="50">0</div>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">Nations Covered</p>
+                <div>
+                    <div class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white count-up tracking-tighter" data-target="50">0</div>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-3">Active Nations</p>
                 </div>
-                <div class="mobile-center">
-                    <div class="text-4xl font-black text-brand tracking-tighter">99.8%</div>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">Data Accuracy</p>
+                <div>
+                    <div class="text-4xl lg:text-5xl font-black text-brand tracking-tighter">99.8%</div>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-3">Data Integrity</p>
                 </div>
-                <div class="mobile-center">
-                    <div class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">24/7</div>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">Expert Support</p>
+                <div>
+                    <div class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">24/7</div>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-3">Expert Oversight</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 3. CEO Manifesto -->
-    <section id="vision" class="py-32 bg-white dark:bg-slate-950">
-        <div class="max-w-5xl mx-auto px-6 text-center reveal">
-            <h2 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-10">Leadership Manifesto</h2>
-            <blockquote class="text-2xl lg:text-4xl font-light text-slate-800 dark:text-slate-200 leading-snug italic">
-                "Our mission is to anchor boardroom decisions in <span class="text-brand font-medium">unfiltered sentiment</span>. We deconstruct complexity to find the human signal in a world of digital noise."
-            </blockquote>
-            <p class="mt-8 text-[11px] font-black uppercase tracking-widest text-slate-400">— CEO, Clique Survey</p>
+    <!-- 3. Leadership Vision (Pillar Imagery) -->
+    <section id="vision" class="py-40 bg-white dark:bg-slate-950 overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center mobile-center">
+            <div class="gsap-reveal">
+                <div class="relative group">
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1000" class="rounded-[3rem] shadow-2xl border border-white/10 transition-all duration-700 grayscale group-hover:grayscale-0" alt="Consultancy">
+                    <div class="absolute inset-0 bg-brand/10 rounded-[3rem] opacity-30 group-hover:opacity-0 transition-opacity"></div>
+                </div>
+            </div>
+            <div class="gsap-reveal">
+                <h2 class="text-xs font-bold text-brand uppercase tracking-[0.5em] mb-12">The CEO Manifesto</h2>
+                <blockquote class="text-3xl lg:text-5xl font-light text-slate-800 dark:text-slate-100 leading-tight tracking-tight italic">
+                    "Data is the silent language of the consumer. At Clique Survey, our ambition is to anchor boardroom decisions in <span class="text-brand font-medium underline decoration-brand/20">authentic human behavior</span>, eliminating the noise to find the signal."
+                </blockquote>
+                <div class="mt-12 flex items-center gap-6 mobile-center">
+                    <div class="w-16 h-px bg-brand"></div>
+                    <p class="text-[11px] font-black uppercase tracking-widest text-slate-400">Founder & CEO, Clique Survey</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- 4. Pillar: Data Collection -->
+    <!-- 4. Pillar: Online Data Collection -->
     <section id="services" class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-20 items-center mobile-center">
-                <div class="reveal">
+            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center">
+                <div class="gsap-reveal">
                     <h3 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-6">Pillar 01</h3>
-                    <h2 class="text-3xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tighter">Online Data Collection</h2>
-                    <p class="text-lg text-slate-500 dark:text-slate-400 mb-8 font-medium">
-                        Access our elite global panel of 1M+ double-opt-in respondents. We specialize in B2B decision makers, specialized HCPs, and niche consumer segments across 50+ countries.
-                    </p>
-                    <div class="grid grid-cols-2 gap-6 mobile-center">
-                        <div class="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
-                            <h4 class="font-bold mb-1">Global Reach</h4>
-                            <p class="text-xs text-slate-500">Local fieldwork in 50+ nations.</p>
-                        </div>
-                        <div class="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
-                            <h4 class="font-bold mb-1">B2B Experts</h4>
-                            <p class="text-xs text-slate-500">C-Suite & Tech DMU access.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="reveal">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="rounded-[2rem] shadow-2xl" alt="Global Operations">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Pillar: Programming -->
-    <section class="py-32 bg-white dark:bg-slate-950">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-20 items-center mobile-center">
-                <div class="lg:order-2 reveal">
-                    <h3 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-6">Pillar 02</h3>
-                    <h2 class="text-3xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tighter">Programming & Hosting</h2>
-                    <p class="text-lg text-slate-500 dark:text-slate-400 mb-8 font-medium">
-                        Technical excellence in CAWI solutions. We script logic-rich questionnaires with multi-language support and 100% responsiveness for high engagement on any device.
-                    </p>
-                    <ul class="text-[10px] font-bold text-brand uppercase tracking-widest space-y-4">
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand rounded-full"></span> Secure Zero-Latency Hosting</li>
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand rounded-full"></span> Dynamic Branching Logic</li>
-                    </ul>
-                </div>
-                <div class="lg:order-1 reveal">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" class="rounded-[2rem] shadow-2xl" alt="Technical Logic">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. Pillar: Processing -->
-    <section class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-20 items-center mobile-center">
-                <div class="reveal">
-                    <h3 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-6">Pillar 03</h3>
-                    <h2 class="text-3xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tighter">Processing & Analytics</h2>
-                    <p class="text-lg text-slate-500 dark:text-slate-400 mb-8 font-medium">
-                        Raw data is a liability; cleaned data is an asset. Our specialists use SPSS and Quantum for rigorous statistical cleaning and tabulation, delivering visual boardroom-ready insights.
+                    <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tighter italic">Online Data Collection.</h2>
+                    <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium">
+                        Leverage our proprietary panel of 1M+ double-opt-in members. We reach beyond general consumers into elite segments: C-suite executives, specialist HCPs, and niche B2B decision makers.
                     </p>
                     <div class="flex gap-4 mobile-center">
-                        <div class="w-14 h-14 rounded-xl gradient-brand flex items-center justify-center text-white shadow-xl shadow-brand/20 transition-transform hover:scale-110">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                        <div class="w-14 h-14 rounded-2xl gradient-brand flex items-center justify-center text-white shadow-xl shadow-brand/20">
+                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
                         </div>
-                        <div class="w-14 h-14 rounded-xl bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white shadow-xl transition-transform hover:scale-110">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        </div>
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-tight py-2">Multi-Country <br>Global Fieldwork</p>
                     </div>
                 </div>
-                <div class="reveal">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="rounded-[2rem] shadow-2xl" alt="Statistical Hub">
+                <div class="gsap-reveal">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Healthcare Analytics">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Pillar: Programming & Hosting -->
+    <section class="py-32 bg-white dark:bg-slate-950">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center">
+                <div class="lg:order-2 gsap-reveal">
+                    <h3 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-6">Pillar 02</h3>
+                    <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tighter italic">Technical Engineering.</h2>
+                    <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium">
+                        We deploy complex CAWI solutions featuring advanced skip logic, dynamic branching, and multi-language support. Our surveys are 100% responsive, optimized for seamless boardroom reporting.
+                    </p>
+                    <div class="flex gap-4 mobile-center">
+                        <div class="w-14 h-14 rounded-2xl bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white shadow-xl">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        </div>
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-tight py-2">Advanced Skip Logic <br>& Multi-Lang Deployment</p>
+                    </div>
+                </div>
+                <div class="lg:order-1 gsap-reveal">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Engineering">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Pillar: Data Processing -->
+    <section class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center">
+                <div class="gsap-reveal">
+                    <h3 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-6">Pillar 03</h3>
+                    <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tighter italic">Processing & Analytics.</h2>
+                    <p class="text-lg text-slate-500 dark:text-slate-400 mb-8 font-medium leading-relaxed">
+                        Raw data is a liability; cleaned data is an asset. Our team employs rigorous statistical cleaning, weighting, and tabulation using SPSS and Quantum, translating raw inputs into visual strategic intelligence.
+                    </p>
+                    <div class="flex gap-4 mobile-center">
+                        <div class="w-14 h-14 rounded-2xl gradient-brand flex items-center justify-center text-white shadow-xl shadow-brand/20"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg></div>
+                        <div class="w-14 h-14 rounded-xl bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white shadow-xl"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div>
+                    </div>
+                </div>
+                <div class="gsap-reveal">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Analytics">
                 </div>
             </div>
         </div>
@@ -328,26 +350,27 @@
     <section id="quality" class="py-40 bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden">
         <div class="absolute bottom-0 right-0 w-1/3 h-1/2 gradient-brand opacity-10 blur-[120px]"></div>
         <div class="max-w-7xl mx-auto px-6 relative z-10 mobile-center">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-10">Quality Architecture</h2>
-                <h3 class="text-4xl lg:text-6xl font-extrabold mb-10 tracking-tighter italic">Integrity is our currency.</h3>
+            <div class="text-center mb-20 gsap-reveal">
+                <h2 class="text-xs font-bold text-brand uppercase tracking-[0.4em] mb-10 text-center">Quality Architecture</h2>
+                <h3 class="text-4xl lg:text-6xl font-extrabold mb-10 tracking-tighter text-center italic">Integrity without compromise.</h3>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 reveal">
-                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl text-center mobile-center">
-                    <div class="text-3xl font-black text-brand mb-2">DOI</div>
-                    <h4 class="font-bold text-[10px] uppercase tracking-widest text-slate-500">Verified Panels</h4>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-10 gsap-reveal">
+                <div class="text-center mobile-center p-8 bg-white/5 border border-white/10 rounded-2xl">
+                    <div class="text-3xl font-black text-brand mb-2 italic">DOI</div>
+                    <h4 class="font-bold text-xs uppercase tracking-widest text-slate-400">Verified Panels</h4>
                 </div>
-                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl text-center mobile-center">
-                    <div class="text-3xl font-black text-brand mb-2">BOT</div>
-                    <h4 class="font-bold text-[10px] uppercase tracking-widest text-slate-400">Fingerprinting</h4>
+                <div class="text-center mobile-center p-8 bg-white/5 border border-white/10 rounded-2xl">
+                    <div class="text-3xl font-black text-brand mb-2 italic">BOT</div>
+                    <h4 class="font-bold text-xs uppercase tracking-widest text-slate-400">Fingerprinting</h4>
                 </div>
-                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl text-center mobile-center">
-                    <div class="text-3xl font-black text-brand mb-2">GEO</div>
-                    <h4 class="font-bold text-[10px] uppercase tracking-widest text-slate-500">IP Scrubbing</h4>
+                <div class="text-center mobile-center p-8 bg-white/5 border border-white/10 rounded-2xl">
+                    <div class="text-3xl font-black text-brand mb-2 italic">GEO</div>
+                    <h4 class="font-bold text-xs uppercase tracking-widest text-slate-400">IP Scrubbing</h4>
                 </div>
-                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl text-center mobile-center">
-                    <div class="text-3xl font-black text-brand mb-2">TIME</div>
-                    <h4 class="font-bold text-[10px] uppercase tracking-widest text-slate-400">Speeder Trap</h4>
+                <div class="text-center mobile-center p-8 bg-white/5 border border-white/10 rounded-2xl">
+                    <div class="text-3xl font-black text-brand mb-2 italic">TIME</div>
+                    <h4 class="font-bold text-xs uppercase tracking-widest text-slate-400">Speeder Checks</h4>
                 </div>
             </div>
         </div>
@@ -356,63 +379,63 @@
     <!-- 8. Sector Visual Grid -->
     <section id="industries" class="py-32 bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-24 tracking-tighter reveal">Vertical Specializations.</h2>
+            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-24 tracking-tighter gsap-reveal">Vertical Specializations.</h2>
             <div class="grid lg:grid-cols-3 gap-8 mobile-grid-center">
-                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group reveal">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110">
+                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
-                        <h4 class="text-3xl font-bold text-white mb-2 italic">Healthcare</h4>
-                        <p class="text-slate-400 text-sm">Specialized HCP access and patient intelligence.</p>
-                    </div>
-                </div>
-                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group reveal" style="transition-delay: 0.1s">
-                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
-                        <h4 class="text-3xl font-bold text-white mb-4 italic">B2B / Tech</h4>
+                        <h4 class="text-3xl font-bold text-white mb-2 italic">B2B / Tech</h4>
                         <p class="text-slate-400 text-sm">C-Suite and technical specialist access worldwide.</p>
                     </div>
                 </div>
-                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group reveal" style="transition-delay: 0.2s">
+                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal" style="transition-delay: 0.1s">
                     <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
                         <h4 class="text-3xl font-bold text-white mb-4 italic">FMCG</h4>
                         <p class="text-slate-400 text-sm">Global brand behavior and sentiment mapping.</p>
                     </div>
                 </div>
+                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal" style="transition-delay: 0.2s">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
+                        <h4 class="text-3xl font-bold text-white mb-4 italic">Healthcare</h4>
+                        <p class="text-slate-400 text-sm">Specialized HCP and patient intelligence.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 9. Process Path -->
+    <!-- 9. Execution Path -->
     <section id="process" class="py-32 bg-slate-50 dark:bg-slate-900/40 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6 text-center mobile-center">
-            <h2 class="text-3xl font-extrabold mb-24 tracking-tighter reveal">Strategic Execution Cycle.</h2>
+            <h2 class="text-3xl font-extrabold mb-24 tracking-tighter gsap-reveal">The Strategic Execution Cycle.</h2>
             <div class="grid lg:grid-cols-4 gap-8">
                 <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 gsap-reveal hover:border-brand transition-all">
                     <div class="w-14 h-14 rounded-full gradient-brand text-white flex items-center justify-center font-black mx-auto mb-10 shadow-lg text-lg">1</div>
                     <h4 class="font-bold mb-4 tracking-tight text-xl">Discovery</h4>
-                    <p class="text-xs text-slate-500 uppercase font-black">Segment Mapping</p>
+                    <p class="text-xs text-slate-500 uppercase font-black tracking-widest">Niche Mapping</p>
                 </div>
                 <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 gsap-reveal hover:border-brand transition-all">
                     <div class="w-14 h-14 rounded-full bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-black mx-auto mb-10 shadow-lg text-lg">2</div>
                     <h4 class="font-bold mb-4 tracking-tight text-xl">Logic Build</h4>
-                    <p class="text-xs text-slate-500 uppercase font-black">Technical Scripting</p>
+                    <p class="text-xs text-slate-500 uppercase font-black tracking-widest">Technical Scripting</p>
                 </div>
                 <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 gsap-reveal hover:border-brand transition-all">
                     <div class="w-14 h-14 rounded-full bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-black mx-auto mb-10 shadow-lg text-lg">3</div>
                     <h4 class="font-bold mb-4 tracking-tight text-xl">Acquire</h4>
-                    <p class="text-xs text-slate-500 uppercase font-black">Live Acquisition</p>
+                    <p class="text-xs text-slate-500 uppercase font-black tracking-widest">Live Acquisition</p>
                 </div>
                 <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 gsap-reveal hover:border-brand transition-all">
                     <div class="w-14 h-14 rounded-full bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-black mx-auto mb-10 shadow-lg text-lg">4</div>
-                    <h4 class="font-bold mb-4 tracking-tight text-xl">Synthesis</h4>
-                    <p class="text-xs text-slate-500 uppercase font-black">Insight Delivery</p>
+                    <h4 class="font-bold mb-4 tracking-tight text-xl">Distill</h4>
+                    <p class="text-xs text-slate-500 uppercase font-black tracking-widest">Synthesis</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 10. Certifications Logo Wall -->
+    <!-- 10. Certifications wall -->
     <section class="py-24 bg-white dark:bg-slate-950 text-center opacity-40 flex flex-wrap justify-center gap-16 grayscale mobile-center gsap-reveal">
         <span class="text-xl font-black italic tracking-widest text-slate-400">ISO 20252:2019</span>
         <span class="text-xl font-black italic tracking-widest text-slate-400">ESOMAR MEMBER</span>
@@ -421,29 +444,36 @@
     </section>
 
     <!-- 11. FAQ Insights -->
-    <section class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
-        <div class="max-w-3xl mx-auto px-6 mobile-center">
-            <h2 class="text-3xl font-extrabold mb-16 text-center tracking-tighter reveal">Intelligence Insights (FAQ)</h2>
+    <section id="faq" class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6 mobile-center">
+            <h2 class="text-3xl lg:text-4xl font-extrabold mb-16 text-center tracking-tighter gsap-reveal">Intelligence Insights (FAQ)</h2>
             <div class="space-y-6">
-                <details class="group bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 gsap-reveal cursor-pointer hover:border-brand">
+                <details class="group bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 gsap-reveal cursor-pointer hover:border-brand transition-all">
                     <summary class="list-none flex justify-between items-center font-bold text-slate-900 dark:text-white text-lg">
-                        Global Fieldwork Reach
-                        <span class="text-brand transition-transform group-open:rotate-180 font-black">↓</span>
+                        Global Fieldwork Reach & Panels
+                        <span class="text-brand transition-transform group-open:rotate-180 font-black text-xl">↓</span>
                     </summary>
-                    <p class="mt-6 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">We maintain a proprietary panel of 1M+ members across Asia, Americas, Europe, and the Middle East for high-stakes research.</p>
+                    <p class="mt-6 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">We maintain a proprietary pool of 1M+ members across Asia, Americas, Europe, and the Middle East, with specialized focus on niche sectors.</p>
                 </details>
-                <details class="group bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 gsap-reveal cursor-pointer hover:border-brand">
+                <details class="group bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 gsap-reveal cursor-pointer hover:border-brand transition-all">
                     <summary class="list-none flex justify-between items-center font-bold text-slate-900 dark:text-white text-lg">
-                        Data Integrity Verification
-                        <span class="text-brand transition-transform group-open:rotate-180 font-black">↓</span>
+                        Turnaround Times (TAT)
+                        <span class="text-brand transition-transform group-open:rotate-180 font-black text-xl">↓</span>
                     </summary>
-                    <p class="mt-6 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Our protocol includes DOI verification, Geo-IP matching, digital fingerprinting, and manual trap analysis for every project.</p>
+                    <p class="mt-6 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Our agile infrastructure allows for 24-hour setup on standardized studies and rapid acquisition for global trackers.</p>
+                </details>
+                <details class="group bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 gsap-reveal cursor-pointer hover:border-brand transition-all">
+                    <summary class="list-none flex justify-between items-center font-bold text-slate-900 dark:text-white text-lg">
+                        Complex Logic Support
+                        <span class="text-brand transition-transform group-open:rotate-180 font-black text-xl">↓</span>
+                    </summary>
+                    <p class="mt-6 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">We support full Conjoint, MaxDiff, and advanced Heatmapping within our CAWI framework to deconstruct respondent preferences.</p>
                 </details>
             </div>
         </div>
     </section>
 
-    <!-- 12. Final conversion (Contact) -->
+    <!-- 12. Final Contact Section -->
     <section id="contact" class="py-40 bg-white dark:bg-slate-950 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="grid lg:grid-cols-2 gap-24 mobile-center">
@@ -467,8 +497,8 @@
                             <input type="text" name="name" placeholder="YOUR NAME" class="panel-input" required>
                             <input type="email" name="email" placeholder="WORK EMAIL" class="panel-input" required>
                         </div>
-                        <textarea name="project" rows="3" placeholder="DESCRIBE YOUR PROJECT" class="panel-input"></textarea>
-                        <button type="submit" class="w-full py-6 gradient-brand text-white rounded-2xl font-black uppercase text-xs tracking-[0.4em] shadow-xl shadow-brand/30 hover:brightness-110 transition-all active:scale-95">Initiate Mission</button>
+                        <textarea name="project" rows="3" placeholder="PROJECT REQUIREMENTS" class="panel-input"></textarea>
+                        <button type="submit" class="w-full py-6 gradient-brand text-white rounded-2xl font-black uppercase text-xs tracking-[0.4em] shadow-xl shadow-brand/30 hover:brightness-110 transition-all active:scale-95">Initiate RFQ</button>
                     </form>
                 </div>
             </div>
@@ -479,7 +509,7 @@
     <footer class="py-24 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 text-center lg:text-left mobile-center">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col lg:flex-row justify-between items-center gap-12 mb-16">
-                <img src="https://cliquesurvey.com/images/Untitled.svg" alt="Clique" class="h-10 w-auto">
+                <img src="https://cliquesurvey.com/images/Untitled.svg" alt="Clique" class="h-10 w-auto transition-transform hover:scale-110">
                 <div class="flex flex-wrap justify-center gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
                     <a href="#" class="hover:text-brand transition-colors">Privacy</a>
                     <a href="#" class="hover:text-brand transition-colors">GDPR Transparency</a>
@@ -511,24 +541,23 @@
         }
 
         window.onload = () => {
+            // Speed optimization: Ensure content is visible immediately
+            gsap.set(".gsap-reveal, .hero-content, .hero-visual", { opacity: 1, y: 0 });
+
             // High-Performance Batch Reveal
             gsap.utils.toArray(".gsap-reveal, .reveal").forEach(el => {
-                gsap.to(el, {
+                gsap.from(el, {
                     scrollTrigger: {
                         trigger: el,
                         start: "top 92%",
                         toggleActions: "play none none none"
                     },
-                    opacity: 1,
-                    y: 0,
+                    opacity: 0,
+                    y: 40,
                     duration: 1.2,
                     ease: "power3.out"
                 });
             });
-
-            // Specific Hero Entrances
-            gsap.to(".hero-content", { opacity: 1, y: 0, duration: 1.5, ease: "power4.out" });
-            gsap.to(".hero-visual", { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.3 });
 
             // Statistics Counter
             gsap.utils.toArray(".count-up").forEach(el => {
