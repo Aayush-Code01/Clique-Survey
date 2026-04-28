@@ -71,6 +71,7 @@
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
             letter-spacing: 0.01em;
+            overflow-x: hidden;
         }
 
         /* Material Symbols Styling */
@@ -82,12 +83,17 @@
             'opsz' 24
         }
 
-        /* --- CUSTOM BRAND CURSOR --- */
+        /* --- CUSTOM BRAND CURSOR FIX --- */
+        #cursor-brand {
+            display: none; /* Hide by default for all devices */
+        }
+
         @media (hover: hover) and (pointer: fine) {
             body {
                 cursor: none;
             }
             #cursor-brand {
+                display: flex;
                 pointer-events: none;
                 position: fixed;
                 top: 0;
@@ -96,7 +102,6 @@
                 opacity: 0;
                 width: 24px;
                 height: 24px;
-                display: flex;
                 align-items: center;
                 justify-content: center;
             }
@@ -112,7 +117,8 @@
             }
         }
 
-        .gsap-reveal { opacity: 0; }
+        /* Prevent invisible content if JS fails or before trigger */
+        .gsap-reveal { opacity: 0; transform: translateY(20px); }
 
         .glass-nav {
             backdrop-filter: blur(16px);
@@ -151,10 +157,9 @@
             background: linear-gradient(135deg, #FC6263 0%, #ff8e8f 100%);
         }
 
-        /* --- ENHANCED SPECIALIZATION CARDS --- */
         .specialization-card {
             position: relative;
-            height: 400px;
+            height: 420px;
             width: 100%;
             border-radius: 2.5rem;
             overflow: hidden;
@@ -162,6 +167,7 @@
             transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             transform: translate3d(0,0,0);
             will-change: transform;
+            opacity: 1 !important;
         }
 
         @media (min-width: 1024px) {
@@ -205,7 +211,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 2.5rem;
+            padding: 2rem;
             background: linear-gradient(to top, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.6) 50%, transparent 100%);
             transform: translate3d(0, 0, 0);
             transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
@@ -313,7 +319,7 @@
 </head>
 <body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden bg-animate">
 
-    <!-- Custom Brand Cursor -->
+    <!-- Custom Brand Cursor (Fixed for Mobile) -->
     <div id="cursor-brand">
         <img src="/images/cursor.svg" alt="custom cursor">
     </div>
@@ -330,11 +336,11 @@
         <a href="#faq" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">FAQ</a>
         
         <div class="flex flex-col items-center gap-6 mt-4">
-            <button onclick="toggleTheme()" class="flex items-center gap-3 text-slate-500 font-bold uppercase tracking-premium text-xs bg-slate-100 dark:bg-slate-900 px-6 py-3 rounded-full">
+            <button onclick="toggleTheme()" class="flex items-center gap-3 text-slate-500 font-bold uppercase tracking-premium text-xs bg-slate-100 dark:bg-slate-900 px-8 py-4 rounded-full">
                 <span class="block dark:hidden">Dark Mode</span>
                 <span class="hidden dark:block">Light Mode</span>
-                <svg class="w-4 h-4 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                <svg class="w-4 h-4 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
+                <svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
             </button>
             <button onclick="toggleModal(); toggleMobileMenu();" class="gradient-brand text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest shadow-xl shadow-brand/20">Join Global Panel</button>
         </div>
@@ -343,15 +349,15 @@
     <!-- JOIN PANEL MODAL -->
     <div id="panelModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onclick="toggleModal()"></div>
-        <div class="relative bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl p-8 md:p-14 border border-white/5">
-            <button onclick="toggleModal()" class="absolute top-8 right-8 text-slate-400 hover:text-brand transition-colors">
+        <div class="relative bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl p-6 md:p-14 border border-white/5">
+            <button onclick="toggleModal()" class="absolute top-6 right-6 md:top-8 md:right-8 text-slate-400 hover:text-brand transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
-            <h2 class="text-5xl md:text-6xl font-bold text-brand mb-12 text-left tracking-tight">Join Our Panel</h2>
-            <form action="https://formspree.io/f/sales@cliquesurvey.com" method="POST" class="space-y-8">
+            <h2 class="text-4xl md:text-6xl font-bold text-brand mb-10 text-left tracking-tight">Join Our Panel</h2>
+            <form action="https://formspree.io/f/sales@cliquesurvey.com" method="POST" class="space-y-6 md:space-y-8">
                 <input type="hidden" name="_subject" value="New Panel Application - Clique Survey">
                 
-                <div class="grid gap-8">
+                <div class="grid gap-6 md:gap-8">
                     <input type="text" name="name" placeholder="ENTER YOUR NAME" class="panel-input" required>
                     
                     <select name="gender" class="panel-input" required>
@@ -609,10 +615,10 @@
                         <option value="HEALTHCARE">HEALTHCARE PANEL</option>
                     </select>
 
-                    <textarea name="message" placeholder="ENTER YOUR MESSAGE" rows="3" class="panel-input"></textarea>
+                    <textarea name="message" placeholder="ENTER YOUR MESSAGE" rows="2" class="panel-input"></textarea>
                 </div>
 
-                <div class="pt-8">
+                <div class="pt-6">
                     <button type="submit" class="w-full md:w-auto md:px-12 py-4 bg-[#5B89C3] hover:bg-[#4a72a5] text-white rounded font-bold uppercase text-xs tracking-widest transition-all">Submit</button>
                 </div>
             </form>
@@ -623,7 +629,7 @@
     <div id="specModal" class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-950/90 backdrop-blur-xl" onclick="closeSpecModal()"></div>
         <div class="relative bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl shadow-2xl p-8 md:p-14 border border-white/5 overflow-y-auto max-h-[90vh]">
-            <button onclick="closeSpecModal()" class="absolute top-8 right-8 text-slate-400 hover:text-brand transition-colors">
+            <button onclick="closeSpecModal()" class="absolute top-6 right-6 md:top-8 md:right-8 text-slate-400 hover:text-brand transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
             <div id="specModalContent">
@@ -658,10 +664,10 @@
                 </div>
             </div>
             
-            <div class="flex items-center gap-4 lg:hidden">
+            <div class="flex items-center gap-3 lg:hidden">
                 <button onclick="toggleTheme()" class="text-slate-500 hover:text-brand p-2 rounded-lg bg-slate-100 dark:bg-slate-900 transition-all active:scale-90">
-                    <svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                    <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
+                    <svg class="w-6 h-6 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg class="w-6 h-6 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
                 </button>
                 <button class="text-slate-500 p-2 transition-all active:scale-90" onclick="toggleMobileMenu()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
@@ -671,7 +677,7 @@
     </nav>
 
     <!-- 1. Hero Section -->
-    <section class="relative h-auto pt-40 pb-20 lg:pt-52 lg:pb-32 overflow-hidden bg-white dark:bg-slate-950">
+    <section class="relative h-auto pt-32 pb-20 lg:pt-52 lg:pb-32 overflow-hidden bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
             <div class="grid lg:grid-cols-2 gap-16 items-center mobile-center">
                 <div class="hero-content">
@@ -682,21 +688,20 @@
                     <p class="text-lg lg:text-xl text-slate-500 dark:text-slate-400 mb-10 leading-relaxed max-w-xl font-medium gsap-reveal tracking-slight">
                         Clique Survey builds the infrastructure for human-verified intelligence. We bridge the gap between global consumer behavior and high-fidelity intelligence across 50+ countries.
                     </p>
-                    <div class="flex flex-wrap gap-5 mobile-center gsap-reveal">
-                        <a href="#services" class="gradient-brand text-white px-10 py-4 font-bold text-xs uppercase tracking-premium rounded-full shadow-xl shadow-brand/20 hover:scale-105 transition-all">Explore Solutions</a>
-                        <button onclick="toggleModal()" class="bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 px-10 py-4 font-bold text-xs uppercase tracking-premium rounded-full hover:border-brand transition-all">Join Panel</button>
+                    <div class="flex flex-wrap gap-4 mobile-center gsap-reveal">
+                        <a href="#services" class="gradient-brand text-white px-8 py-4 font-bold text-[10px] uppercase tracking-premium rounded-full shadow-xl shadow-brand/20 hover:scale-105 transition-all">Explore Solutions</a>
+                        <button onclick="toggleModal()" class="bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 px-8 py-4 font-bold text-[10px] uppercase tracking-premium rounded-full hover:border-brand transition-all">Join Panel</button>
                     </div>
                 </div>
                 
                 <div class="hero-visual gsap-reveal">
-                    <div class="relative group aspect-square lg:aspect-video w-full">
-                        <!-- Background Video -->
-                        <video autoplay muted loop playsinline class="w-full h-full object-cover rounded-[3rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-transform duration-1000 group-hover:scale-[1.02]">
+                    <div class="relative group aspect-video w-full">
+                        <video autoplay muted loop playsinline class="w-full h-full object-cover rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-transform duration-1000 group-hover:scale-[1.02]">
                             <source src="https://www.pexels.com/download/video/1851190/" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        <div class="absolute -bottom-6 -left-6 bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 hidden md:block">
-                            <div class="text-4xl font-black text-brand count-up tracking-tight" data-target="1000000">0</div>
+                        <div class="absolute -bottom-4 -left-4 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-800 hidden md:block">
+                            <div class="text-3xl font-black text-brand count-up tracking-tight" data-target="1000000">0</div>
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-premium mt-1">Verified Respondents</p>
                         </div>
                     </div>
@@ -706,23 +711,23 @@
     </section>
 
     <!-- 2. Dynamic Intelligence Stats -->
-    <section class="py-24 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
+    <section class="py-20 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center mobile-center gsap-reveal">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 text-center gsap-reveal">
                 <div>
-                    <div class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white count-up tracking-tight" data-target="1000000">0</div>
+                    <div class="text-3xl lg:text-5xl font-black text-slate-900 dark:text-white count-up tracking-tight" data-target="1000000">0</div>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-premium mt-3">Verified Panelists</p>
                 </div>
                 <div>
-                    <div class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white count-up tracking-tight" data-target="50">0</div>
+                    <div class="text-3xl lg:text-5xl font-black text-slate-900 dark:text-white count-up tracking-tight" data-target="50">0</div>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-premium mt-3">Active Nations</p>
                 </div>
                 <div>
-                    <div class="text-4xl lg:text-5xl font-black text-brand tracking-tight">99.8%</div>
+                    <div class="text-3xl lg:text-5xl font-black text-brand tracking-tight">99.8%</div>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-premium mt-3">Data Integrity</p>
                 </div>
                 <div>
-                    <div class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">24/7</div>
+                    <div class="text-3xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">24/7</div>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-premium mt-3">Expert Oversight</p>
                 </div>
             </div>
@@ -730,64 +735,64 @@
     </section>
 
     <!-- 3. Leadership Vision -->
-    <section id="vision" class="py-40 bg-white dark:bg-slate-950 overflow-hidden relative">
-        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center mobile-center">
+    <section id="vision" class="py-24 md:py-40 bg-white dark:bg-slate-950 overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 md:gap-20 items-center mobile-center">
             <div class="gsap-reveal">
                 <div class="relative group">
-                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1000" class="rounded-[3rem] shadow-2xl border border-white/10 transition-all duration-700 grayscale group-hover:grayscale-0" alt="Consultancy">
-                    <div class="absolute inset-0 bg-brand/10 rounded-[3rem] opacity-30 group-hover:opacity-0 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1000" class="rounded-[2.5rem] shadow-2xl border border-white/10 transition-all duration-700 grayscale group-hover:grayscale-0" alt="Consultancy">
+                    <div class="absolute inset-0 bg-brand/10 rounded-[2.5rem] opacity-30 group-hover:opacity-0 transition-opacity"></div>
                 </div>
             </div>
             <div class="gsap-reveal">
-                <h2 class="text-xs font-bold text-brand uppercase tracking-premium mb-12">The CEO Manifesto</h2>
-                <blockquote class="text-3xl lg:text-5xl font-light text-slate-800 dark:text-slate-100 leading-tight tracking-slight italic manifesto-quote">
+                <h2 class="text-xs font-bold text-brand uppercase tracking-premium mb-8 md:mb-12">The CEO Manifesto</h2>
+                <blockquote class="text-2xl lg:text-5xl font-light text-slate-800 dark:text-slate-100 leading-tight tracking-slight italic manifesto-quote">
                     "Data is the silent language of the consumer. At Clique Survey, our ambition is to anchor boardroom decisions in 
                     <span id="animate-behavior" class="text-brand font-medium underline decoration-brand/20">authentic human behavior</span>, eliminating the noise to find the signal."
                 </blockquote>
-                <div class="mt-12 flex items-center gap-6 mobile-center">
-                    <div class="w-16 h-px bg-brand"></div>
-                    <p class="text-[11px] font-black uppercase tracking-premium text-slate-400">Founder & CEO, Clique Survey</p>
+                <div class="mt-8 md:mt-12 flex items-center gap-6 mobile-center">
+                    <div class="w-12 md:w-16 h-px bg-brand"></div>
+                    <p class="text-[10px] md:text-[11px] font-black uppercase tracking-premium text-slate-400">Founder & CEO, Clique Survey</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Pillar 4: Solutions -->
-    <section id="services" class="py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
+    <section id="services" class="py-24 md:py-32 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Pillar 1 -->
-            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center mb-40">
+            <div class="grid lg:grid-cols-2 gap-16 md:gap-24 items-center mobile-center mb-24 md:mb-40">
                 <div class="gsap-reveal">
                     <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-6">Pillar 01</h3>
                     <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight italic">Online Data Collection.</h2>
                     <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium tracking-slight">
                         Leverage our proprietary panel of 1M+ double-opt-in members. We reach beyond general consumers into elite segments: C-suite executives, specialist HCPs, and niche B2B decision makers.
                     </p>
-                    <div class="flex flex-wrap gap-12">
-                        <div class="space-y-2">
+                    <div class="flex flex-wrap gap-8 md:gap-12">
+                        <div class="space-y-1">
                             <h5 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">50+</h5>
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-premium">Nations Covered</p>
                         </div>
-                        <div class="space-y-2">
+                        <div class="space-y-1">
                             <h5 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">CAWI</h5>
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-premium">Primary Method</p>
                         </div>
                     </div>
                 </div>
                 <div class="gsap-reveal">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Data Collection">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" class="rounded-[2rem] shadow-2xl border border-white/10" alt="Data Collection">
                 </div>
             </div>
 
             <!-- Pillar 2 -->
-            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center mb-40">
+            <div class="grid lg:grid-cols-2 gap-16 md:gap-24 items-center mobile-center mb-24 md:mb-40">
                 <div class="gsap-reveal lg:order-2">
                     <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-6">Pillar 02</h3>
                     <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight italic">Survey Programming.</h2>
                     <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium tracking-slight">
                         We transform complex research designs into flawless digital experiences. From multi-country logic to high-engagement interactive elements, our scripting ensures maximum response rates.
                     </p>
-                    <ul class="grid grid-cols-2 gap-4 text-[11px] font-bold uppercase tracking-premium text-slate-400">
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[10px] md:text-[11px] font-bold uppercase tracking-premium text-slate-400">
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-brand"></div> Decipher / Confirmit</li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-brand"></div> Multi-Lingual Support</li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-brand"></div> Mobile Optimization</li>
@@ -795,36 +800,36 @@
                     </ul>
                 </div>
                 <div class="gsap-reveal lg:order-1">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Survey Programming">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="rounded-[2rem] shadow-2xl border border-white/10" alt="Survey Programming">
                 </div>
             </div>
 
             <!-- Pillar 3 -->
-            <div class="grid lg:grid-cols-2 gap-24 items-center mobile-center">
+            <div class="grid lg:grid-cols-2 gap-16 md:gap-24 items-center mobile-center">
                 <div class="gsap-reveal">
                     <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-6">Pillar 03</h3>
                     <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight italic">Processing & Analytics.</h2>
                     <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium tracking-slight">
                         Raw data is just the beginning. We distill millions of data points into actionable insights through advanced statistical modeling, visualization, and cross-tabulation.
                     </p>
-                    <div class="flex gap-4">
-                        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl">
-                            <p class="text-[10px] font-black text-brand uppercase tracking-premium mb-2">Deliverables</p>
+                    <div class="flex gap-4 mobile-center">
+                        <div class="bg-white dark:bg-slate-900 p-5 md:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl">
+                            <p class="text-[9px] md:text-[10px] font-black text-brand uppercase tracking-premium mb-2">Deliverables</p>
                             <p class="text-xs text-slate-500">SPSS, Excel, PowerBI Dashboards</p>
                         </div>
                     </div>
                 </div>
                 <div class="gsap-reveal">
-                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl border border-white/10" alt="Analytics">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800" class="rounded-[2rem] shadow-2xl border border-white/10" alt="Analytics">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 5. Quality & Compliance Section -->
-    <section id="quality" class="py-40 bg-white dark:bg-slate-950">
+    <section id="quality" class="py-24 md:py-40 bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-24 gsap-reveal">
+            <div class="text-center max-w-3xl mx-auto mb-16 md:mb-24 gsap-reveal">
                 <h3 class="text-xs font-bold text-brand uppercase tracking-premium mb-8">Research Integrity</h3>
                 <h2 class="text-4xl lg:text-6xl font-extrabold tracking-tight mb-8">The <span id="animate-clique" class="text-brand">Clique</span> Standard.</h2>
                 <p class="text-slate-500 dark:text-slate-400 text-lg leading-relaxed font-medium">
@@ -832,24 +837,24 @@
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="gsap-reveal space-y-6">
-                    <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+            <div class="grid md:grid-cols-3 gap-10 md:gap-12">
+                <div class="gsap-reveal space-y-5 md:space-y-6">
+                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
+                        <svg class="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                     </div>
                     <h4 class="text-xl font-bold tracking-tight italic">Compliance First</h4>
                     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Full adherence to GDPR, CCPA, and ISO 20252 standards. Your data security and participant privacy are non-negotiable.</p>
                 </div>
-                <div class="gsap-reveal space-y-6">
-                    <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
-                        <span class="material-symbols-outlined text-4xl">fingerprint</span>
+                <div class="gsap-reveal space-y-5 md:space-y-6">
+                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
+                        <span class="material-symbols-outlined text-3xl md:text-4xl">fingerprint</span>
                     </div>
                     <h4 class="text-xl font-bold tracking-tight italic">Digital Fingerprinting</h4>
                     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Proprietary technology to detect and eliminate duplicate entries, bot behavior, and fraudulent response patterns in real-time.</p>
                 </div>
-                <div class="gsap-reveal space-y-6">
-                    <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                <div class="gsap-reveal space-y-5 md:space-y-6">
+                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
+                        <svg class="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                     </div>
                     <h4 class="text-xl font-bold tracking-tight italic">Trap Questions</h4>
                     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Integrated red-herring questions and attention checks that filter out speeders and non-attentive participants instantly.</p>
@@ -859,10 +864,10 @@
     </section>
 
     <!-- Vertical Specializations -->
-    <section id="industries" class="py-32 bg-white dark:bg-slate-950">
+    <section id="industries" class="py-24 md:py-32 bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-24 tracking-tight gsap-reveal">Vertical Specializations.</h2>
-            <div class="grid lg:grid-cols-3 gap-8 mobile-grid-center">
+            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-16 md:mb-24 tracking-tight gsap-reveal">Vertical Specializations.</h2>
+            <div class="grid lg:grid-cols-3 gap-10 md:gap-8 mobile-grid-center">
                 
                 <!-- B2B Card -->
                 <div class="specialization-card group gsap-reveal" onclick="openSpecModal('b2b')">
@@ -902,9 +907,9 @@
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="py-40 bg-slate-50 dark:bg-slate-900/50">
+    <section id="faq" class="py-24 md:py-40 bg-slate-50 dark:bg-slate-900/50">
         <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-24 gsap-reveal">
+            <div class="text-center mb-16 md:mb-24 gsap-reveal">
                 <h2 class="text-4xl lg:text-5xl font-extrabold tracking-tight">Research Insights & FAQ.</h2>
             </div>
             
@@ -969,56 +974,56 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-40 bg-white dark:bg-slate-950 relative overflow-hidden">
+    <section id="contact" class="py-24 md:py-40 bg-white dark:bg-slate-950 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-24 mobile-center">
+            <div class="grid lg:grid-cols-2 gap-16 md:gap-24 mobile-center">
                 <div class="gsap-reveal">
                     <h2 class="text-4xl lg:text-7xl font-extrabold mb-10 tracking-tight leading-tight text-slate-900 dark:text-white italic">Begin your <br><span class="text-brand underline decoration-brand/20">breakthrough.</span></h2>
                     
-                    <div class="space-y-10 mt-16">
+                    <div class="grid gap-8 mt-12 md:mt-16">
                         <!-- Email -->
-                        <div class="flex items-center gap-6 mobile-center flex-col md:flex-row">
-                            <div class="w-14 h-14 rounded-2xl bg-brand-soft flex items-center justify-center text-brand border border-brand/10">
+                        <div class="flex items-center gap-5 md:gap-6 mobile-center flex-col md:flex-row">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-soft flex items-center justify-center text-brand border border-brand/10 shrink-0">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                             </div>
                             <div class="text-left mobile-center">
-                                <p class="text-[10px] font-black uppercase tracking-premium text-slate-400 mb-1">Global Inquiries</p>
-                                <span class="text-xl font-bold tracking-slight">sales@cliquesurvey.com</span>
+                                <p class="text-[9px] md:text-[10px] font-black uppercase tracking-premium text-slate-400 mb-1">Global Inquiries</p>
+                                <span class="text-lg md:text-xl font-bold tracking-slight">sales@cliquesurvey.com</span>
                             </div>
                         </div>
 
                         <!-- Phone -->
-                        <div class="flex items-center gap-6 mobile-center flex-col md:flex-row">
-                            <div class="w-14 h-14 rounded-2xl bg-brand-soft flex items-center justify-center text-brand border border-brand/10">
+                        <div class="flex items-center gap-5 md:gap-6 mobile-center flex-col md:flex-row">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-soft flex items-center justify-center text-brand border border-brand/10 shrink-0">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                             </div>
                             <div class="text-left mobile-center">
-                                <p class="text-[10px] font-black uppercase tracking-premium text-slate-400 mb-1">Direct Line</p>
-                                <span class="text-xl font-bold tracking-slight">+91 9717399219</span>
+                                <p class="text-[9px] md:text-[10px] font-black uppercase tracking-premium text-slate-400 mb-1">Direct Line</p>
+                                <span class="text-lg md:text-xl font-bold tracking-slight">+91 9717399219</span>
                             </div>
                         </div>
 
                         <!-- HQ Location -->
-                        <div class="flex items-center gap-6 mobile-center flex-col md:flex-row">
-                            <div class="w-14 h-14 rounded-2xl bg-brand-soft flex items-center justify-center text-brand border border-brand/10">
+                        <div class="flex items-center gap-5 md:gap-6 mobile-center flex-col md:flex-row">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-soft flex items-center justify-center text-brand border border-brand/10 shrink-0">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                             </div>
                             <div class="text-left mobile-center">
-                                <p class="text-[10px] font-black uppercase tracking-premium text-slate-400 mb-1">Global Headquarters</p>
-                                <span class="text-xl font-bold tracking-slight">Sector 42, Gurugram, India</span>
+                                <p class="text-[9px] md:text-[10px] font-black uppercase tracking-premium text-slate-400 mb-1">Global Headquarters</p>
+                                <span class="text-lg md:text-xl font-bold tracking-slight">Sector 42, Gurugram, India</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-slate-50 dark:bg-slate-900 p-14 rounded-[3.5rem] border border-slate-200 dark:border-slate-800 shadow-2xl gsap-reveal">
-                    <form action="https://formspree.io/f/sales@cliquesurvey.com" method="POST" class="space-y-10">
-                        <div class="grid md:grid-cols-2 gap-10">
+                <div class="bg-slate-50 dark:bg-slate-900 p-8 md:p-14 rounded-[2.5rem] md:rounded-[3.5rem] border border-slate-200 dark:border-slate-800 shadow-2xl gsap-reveal">
+                    <form action="https://formspree.io/f/sales@cliquesurvey.com" method="POST" class="space-y-8 md:space-y-10">
+                        <div class="grid md:grid-cols-2 gap-8 md:gap-10">
                             <input type="text" name="name" placeholder="YOUR NAME" class="panel-input" required>
                             <input type="email" name="email" placeholder="WORK EMAIL" class="panel-input" required>
                         </div>
                         <textarea name="project" rows="3" placeholder="PROJECT REQUIREMENTS" class="panel-input"></textarea>
-                        <button type="submit" class="w-full py-6 gradient-brand text-white rounded-2xl font-black uppercase text-xs tracking-premium shadow-xl shadow-brand/30 hover:brightness-110 transition-all active:scale-95">Initiate RFQ</button>
+                        <button type="submit" class="w-full py-5 md:py-6 gradient-brand text-white rounded-2xl font-black uppercase text-[10px] md:text-xs tracking-premium shadow-xl shadow-brand/30 hover:brightness-110 transition-all active:scale-95">Initiate RFQ</button>
                     </form>
                 </div>
             </div>
@@ -1026,11 +1031,11 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-24 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 text-center lg:text-left mobile-center">
+    <footer class="py-20 md:py-24 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 text-center lg:text-left mobile-center">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col lg:flex-row justify-between items-center gap-12 mb-16">
                 <img src="/images/cs_full.svg" alt="Clique Survey" class="h-10 w-auto transition-transform hover:scale-110" onerror="this.src='https://cliquesurvey.com/images/Untitled.svg'">
-                <div class="text-[10px] font-bold text-slate-300 dark:text-slate-700 tracking-premium uppercase">
+                <div class="text-[9px] md:text-[10px] font-bold text-slate-300 dark:text-slate-700 tracking-premium uppercase">
                     © 2026 Clique Survey Private Limited. All Rights Reserved.
                 </div>
             </div>
@@ -1078,16 +1083,16 @@
             
             content.innerHTML = `
                 <h3 class="text-xs font-black text-brand uppercase tracking-premium mb-6">${type} vertical</h3>
-                <h2 class="text-4xl md:text-5xl font-extrabold mb-8 tracking-tight">${data.title}</h2>
-                <p class="text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed">${data.content}</p>
+                <h2 class="text-3xl md:text-5xl font-extrabold mb-8 tracking-tight">${data.title}</h2>
+                <p class="text-base md:text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed">${data.content}</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
                     ${data.features.map(f => `
-                        <div class="flex items-center gap-3 text-[11px] font-bold uppercase tracking-premium text-slate-400">
+                        <div class="flex items-center gap-3 text-[10px] md:text-[11px] font-bold uppercase tracking-premium text-slate-400">
                             <div class="w-1.5 h-1.5 rounded-full bg-brand"></div> ${f}
                         </div>
                     `).join('')}
                 </div>
-                <button onclick="scrollToRFQ()" class="gradient-brand text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl shadow-brand/20 hover:scale-105 transition-all">Start Project with us</button>
+                <button onclick="scrollToRFQ()" class="w-full md:w-auto gradient-brand text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-xl shadow-brand/20 hover:scale-105 transition-all">Start Project with us</button>
             `;
             
             modal.classList.remove('hidden');
@@ -1102,7 +1107,9 @@
 
         function scrollToRFQ() {
             closeSpecModal();
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
         }
 
         /* FAQ Toggle Function */
@@ -1130,7 +1137,7 @@
             splitToWords('#animate-behavior');
             splitToChars('#animate-clique');
 
-            /* --- SIMPLIFIED CUSTOM BRAND CURSOR --- */
+            /* --- STRICT CUSTOM BRAND CURSOR LOGIC --- */
             if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
                 const cursor = document.getElementById('cursor-brand');
 
@@ -1143,18 +1150,19 @@
                 });
             }
 
+            // High-Performance Content Reveals - Adjusted for Mobile Viewports
             gsap.utils.toArray(".gsap-reveal").forEach(el => {
                 gsap.fromTo(el, 
-                    { opacity: 0, y: 30 },
+                    { opacity: 0, y: 20 },
                     {
                         scrollTrigger: {
                             trigger: el,
-                            start: "top 92%",
+                            start: "top 95%", // Slightly later trigger for mobile
                             toggleActions: "play none none none"
                         },
                         opacity: 1,
                         y: 0,
-                        duration: 1,
+                        duration: 0.8,
                         ease: "power2.out"
                     }
                 );
@@ -1203,7 +1211,7 @@
                 gsap.to(el, {
                     scrollTrigger: { trigger: el, start: "top 95%" },
                     innerText: target,
-                    duration: 3,
+                    duration: 2.5,
                     snap: { innerText: 1 },
                     onUpdate: function() {
                         el.innerHTML = Math.floor(this.targets()[0].innerText).toLocaleString() + (target > 100 ? "+" : "");
