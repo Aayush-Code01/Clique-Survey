@@ -85,11 +85,22 @@
         }
 
         /* Anti-Jitter Fix for cards */
+        .card-image-container {
+            perspective: 1000px;
+            overflow: hidden;
+            backface-visibility: hidden;
+        }
+        
         .card-image-container img {
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            transform-style: preserve-3d;
+            transform: translateZ(0); /* Force GPU */
+            transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1), filter 0.8s ease;
             will-change: transform;
+        }
+
+        .group:hover .card-image-container img {
+            transform: scale(1.05) translateZ(0);
         }
 
         /* Animated Background Gradients */
@@ -132,10 +143,21 @@
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .dark ::-webkit-scrollbar-thumb { background: #334155; }
         
-        /* Word Highlight Animation Initial State */
-        .highlight-span {
+        /* Premium Text Mask Animation */
+        .text-mask {
             display: inline-block;
-            position: relative;
+            overflow: hidden;
+            vertical-align: bottom;
+        }
+        .text-mask-inner {
+            display: inline-block;
+            transform: translateY(100%);
+        }
+
+        .char-span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
         }
     </style>
 </head>
@@ -219,7 +241,7 @@
                 <div class="hero-content">
                     <h1 class="text-5xl lg:text-8xl font-extrabold text-slate-900 dark:text-white leading-[0.95] tracking-tighter mb-8 gsap-reveal">
                         Global Data.<br>
-                        <span class="text-brand italic underline decoration-slate-100 dark:decoration-slate-800 animate-target-word">Human</span> Truth.
+                        <span id="animate-human" class="text-brand italic underline decoration-slate-100 dark:decoration-slate-800">Human</span> Truth.
                     </h1>
                     <p class="text-lg lg:text-xl text-slate-500 dark:text-slate-400 mb-10 leading-relaxed max-w-xl font-medium gsap-reveal">
                         Clique Survey builds the infrastructure for human-verified intelligence. We bridge the gap between global consumer behavior and high-fidelity intelligence across 50+ countries.
@@ -278,8 +300,9 @@
             </div>
             <div class="gsap-reveal">
                 <h2 class="text-xs font-bold text-brand uppercase tracking-[0.5em] mb-12">The CEO Manifesto</h2>
-                <blockquote class="text-3xl lg:text-5xl font-light text-slate-800 dark:text-slate-100 leading-tight tracking-tight italic">
-                    "Data is the silent language of the consumer. At Clique Survey, our ambition is to anchor boardroom decisions in <span class="text-brand font-medium underline decoration-brand/20 animate-target-phrase">authentic human behavior</span>, eliminating the noise to find the signal."
+                <blockquote class="text-3xl lg:text-5xl font-light text-slate-800 dark:text-slate-100 leading-tight tracking-tight italic manifesto-quote">
+                    "Data is the silent language of the consumer. At Clique Survey, our ambition is to anchor boardroom decisions in 
+                    <span id="animate-behavior" class="text-brand font-medium underline decoration-brand/20">authentic human behavior</span>, eliminating the noise to find the signal."
                 </blockquote>
                 <div class="mt-12 flex items-center gap-6 mobile-center">
                     <div class="w-16 h-px bg-brand"></div>
@@ -337,28 +360,34 @@
         </div>
     </section>
 
-    <!-- 8. Sector Visual Grid (FIXED JITTER) -->
+    <!-- 8. Sector Visual Grid (ROCK SOLID STABILITY) -->
     <section id="industries" class="py-32 bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-24 tracking-tighter gsap-reveal">Vertical Specializations.</h2>
             <div class="grid lg:grid-cols-3 gap-8 mobile-grid-center">
-                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal card-image-container">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
+                <div class="relative h-[480px] rounded-[3rem] group gsap-reveal">
+                    <div class="card-image-container w-full h-full rounded-[3rem]">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center pointer-events-none">
                         <h4 class="text-3xl font-bold text-white mb-2 italic">B2B / Tech</h4>
                         <p class="text-slate-400 text-sm">C-Suite and technical specialist access worldwide.</p>
                     </div>
                 </div>
-                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal card-image-container" style="transition-delay: 0.1s">
-                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
+                <div class="relative h-[480px] rounded-[3rem] group gsap-reveal" style="transition-delay: 0.1s">
+                    <div class="card-image-container w-full h-full rounded-[3rem]">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center pointer-events-none">
                         <h4 class="text-3xl font-bold text-white mb-4 italic">FMCG</h4>
                         <p class="text-slate-400 text-sm">Global brand behavior and sentiment mapping.</p>
                     </div>
                 </div>
-                <div class="relative h-[480px] rounded-[3rem] overflow-hidden group gsap-reveal card-image-container" style="transition-delay: 0.2s">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center">
+                <div class="relative h-[480px] rounded-[3rem] group gsap-reveal" style="transition-delay: 0.2s">
+                    <div class="card-image-container w-full h-full rounded-[3rem]">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-12 flex flex-col justify-end mobile-center pointer-events-none">
                         <h4 class="text-3xl font-bold text-white mb-4 italic">Healthcare</h4>
                         <p class="text-slate-400 text-sm">Specialized HCP and patient intelligence.</p>
                     </div>
@@ -451,7 +480,26 @@
             document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
         }
 
+        // Improved Text Splitting Helper
+        function splitToChars(selector) {
+            const el = document.querySelector(selector);
+            if (!el) return;
+            const text = el.innerText;
+            el.innerHTML = text.split('').map(char => `<span class="char-span">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+        }
+
+        function splitToWords(selector) {
+            const el = document.querySelector(selector);
+            if (!el) return;
+            const text = el.innerText;
+            el.innerHTML = text.split(' ').map(word => `<span class="text-mask"><span class="text-mask-inner">${word}&nbsp;</span></span>`).join('');
+        }
+
         window.onload = () => {
+            // Prepare Text Animations
+            splitToChars('#animate-human');
+            splitToWords('#animate-behavior');
+
             // High-Performance Reveal Animations
             gsap.utils.toArray(".gsap-reveal").forEach(el => {
                 gsap.fromTo(el, 
@@ -470,39 +518,32 @@
                 );
             });
 
-            // "Human" Word Entry Animation
-            gsap.fromTo(".animate-target-word", 
-                { scale: 0.9, opacity: 0, color: "#94a3b8" },
-                {
-                    scrollTrigger: {
-                        trigger: ".hero-content",
-                        start: "top 60%"
-                    },
-                    scale: 1,
-                    opacity: 1,
-                    color: "#FC6263",
-                    duration: 1.5,
-                    delay: 0.4,
-                    ease: "elastic.out(1, 0.5)"
-                }
-            );
+            // Improved "Human" Letter Stagger Animation
+            gsap.to("#animate-human .char-span", {
+                scrollTrigger: {
+                    trigger: ".hero-content",
+                    start: "top 60%"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "back.out(2)",
+                delay: 0.5
+            });
 
-            // "Authentic Human Behavior" Entry Animation
-            gsap.fromTo(".animate-target-phrase", 
-                { y: 10, opacity: 0 },
-                {
-                    scrollTrigger: {
-                        trigger: "#vision",
-                        start: "top 70%"
-                    },
-                    y: 0,
-                    opacity: 1,
-                    duration: 1.2,
-                    delay: 0.2,
-                    ease: "power2.out",
-                    stagger: 0.1
-                }
-            );
+            // Improved "Authentic Human Behavior" Reveal Animation
+            gsap.to("#animate-behavior .text-mask-inner", {
+                scrollTrigger: {
+                    trigger: ".manifesto-quote",
+                    start: "top 75%"
+                },
+                y: 0,
+                duration: 1.2,
+                stagger: 0.1,
+                ease: "power4.out",
+                delay: 0.3
+            });
 
             // Statistics Counter
             gsap.utils.toArray(".count-up").forEach(el => {
