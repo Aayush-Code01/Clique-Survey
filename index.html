@@ -689,8 +689,12 @@
                 </div>
                 
                 <div class="hero-visual gsap-reveal">
-                    <div class="relative group">
-                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200" class="rounded-[3rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-transform duration-1000 group-hover:scale-[1.02]" alt="Global Connectivity Intelligence">
+                    <div class="relative group aspect-square lg:aspect-video w-full">
+                        <!-- Background Video Replace Header Image -->
+                        <video autoplay muted loop playsinline class="w-full h-full object-cover rounded-[3rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-transform duration-1000 group-hover:scale-[1.02]">
+                            <source src="https://www.pexels.com/download/video/1851190/" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                         <div class="absolute -bottom-6 -left-6 bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 hidden md:block">
                             <div class="text-4xl font-black text-brand count-up tracking-tight" data-target="1000000">0</div>
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-premium mt-1">Verified Respondents</p>
@@ -836,7 +840,6 @@
                     <h4 class="text-xl font-bold tracking-tight italic">Compliance First</h4>
                     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Full adherence to GDPR, CCPA, and ISO 20252 standards. Your data security and participant privacy are non-negotiable.</p>
                 </div>
-                <!-- Updated with Material Symbol Fingerprint -->
                 <div class="gsap-reveal space-y-6">
                     <div class="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-brand border border-slate-100 dark:border-slate-800">
                         <span class="material-symbols-outlined text-4xl">fingerprint</span>
