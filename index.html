@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+    
     <!-- SEO Meta Tags -->
     <title>Clique Survey | Global Intelligence & Data Collection Specialists</title>
     <meta name="description" content="Elite market research solutions in 50+ countries. Expert Online Data Collection, Survey Programming, and Advanced Analytics. ISO & GDPR compliant.">
@@ -61,8 +64,15 @@
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
             letter-spacing: 0.01em;
+            /* Custom Cursor */
+            cursor: url('/images/cursor.svg'), auto;
         }
         
+        /* Ensure interactive elements still show the pointer but respect custom style if needed */
+        a, button, [onclick], select, summary {
+            cursor: pointer;
+        }
+
         .gsap-reveal { opacity: 0; }
 
         .glass-nav {
@@ -109,7 +119,6 @@
             border-radius: 2.5rem;
             overflow: hidden;
             background: #1e293b;
-            cursor: pointer;
             transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             transform: translate3d(0,0,0);
             will-change: transform;
@@ -219,11 +228,41 @@
             transform: translateY(10px);
         }
 
+        /* FAQ ACCORDION STYLES */
         .faq-item {
             border-bottom: 1px solid rgba(203, 213, 225, 0.5);
-            padding: 1.5rem 0;
+            transition: all 0.3s ease;
         }
         .dark .faq-item { border-color: rgba(51, 65, 85, 0.5); }
+        
+        .faq-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            text-align: left;
+            outline: none;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 1000px;
+            transition: max-height 1s ease-in-out;
+        }
+
+        .faq-icon {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden bg-animate">
@@ -298,6 +337,7 @@
                         <option value="BRAZIL">BRAZIL</option>
                         <option value="BRUNEI">BRUNEI</option>
                         <option value="BULGARIA">BULGARIA</option>
+                        <option value="BRITISH INDIAN OCEAN TERRITORY">BRITISH INDIAN OCEAN TERRITORY</option>
                         <option value="BURKINA FASO">BURKINA FASO</option>
                         <option value="BURUNDI">BURUNDI</option>
                         <option value="CABO VERDE">CABO VERDE</option>
@@ -523,7 +563,7 @@
     <nav class="fixed w-full z-50 glass-nav border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 h-20 flex items-center">
         <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
             <a href="#" class="flex items-center gap-3">
-                <img src="https://cliquesurvey.com/images/Untitled.svg" alt="Clique Survey" class="h-9 md:h-10 w-auto transition-transform hover:scale-105">
+                <img src="/images/cs_full.svg" alt="Clique Survey" class="h-9 md:h-10 w-auto transition-transform hover:scale-105" onerror="this.src='https://cliquesurvey.com/images/Untitled.svg'">
             </a>
             
             <div class="hidden lg:flex items-center gap-10">
@@ -582,7 +622,7 @@
         </div>
     </section>
 
-    <!-- 2. Stats Section -->
+    <!-- 2. Dynamic Intelligence Stats -->
     <section class="py-24 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center mobile-center gsap-reveal">
@@ -741,27 +781,72 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
+    <!-- FAQ Section (COLLAPSIBLE) -->
     <section id="faq" class="py-40 bg-slate-50 dark:bg-slate-900/50">
         <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-24 tracking-tight gsap-reveal">Research Insights & FAQ.</h2>
+            <div class="text-center mb-24 gsap-reveal">
+                <h2 class="text-4xl lg:text-5xl font-extrabold tracking-tight">Research Insights & FAQ.</h2>
+            </div>
             
             <div class="space-y-4 gsap-reveal">
+                <!-- FAQ Item 1 -->
                 <div class="faq-item">
-                    <h4 class="text-lg font-bold mb-4 italic tracking-tight">How do you verify your B2B respondents?</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Our B2B panelists undergo a rigorous multi-step verification, including LinkedIn profile matching, work email confirmation, and screening phone calls for high-incentive executive studies.</p>
+                    <button class="faq-header group" onclick="toggleFaq(this)">
+                        <h4 class="text-lg font-bold italic tracking-tight group-hover:text-brand transition-colors">How do you verify your B2B respondents?</h4>
+                        <span class="faq-icon text-slate-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 pb-8 leading-relaxed">
+                            Our B2B panelists undergo a rigorous multi-step verification, including LinkedIn profile matching, work email confirmation, and screening phone calls for high-incentive executive studies. We also employ digital fingerprinting to ensure single-entry integrity.
+                        </p>
+                    </div>
                 </div>
+
+                <!-- FAQ Item 2 -->
                 <div class="faq-item">
-                    <h4 class="text-lg font-bold mb-4 italic tracking-tight">What is your typical turnaround time for global fieldwork?</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Turnaround varies by niche, but standard consumer studies in Tier 1 markets usually complete within 3–5 business days. Niche B2B or Healthcare studies may take 10–14 days depending on the incidence rate.</p>
+                    <button class="faq-header group" onclick="toggleFaq(this)">
+                        <h4 class="text-lg font-bold italic tracking-tight group-hover:text-brand transition-colors">What is your typical turnaround time for global fieldwork?</h4>
+                        <span class="faq-icon text-slate-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 pb-8 leading-relaxed">
+                            Turnaround varies by niche, but standard consumer studies in Tier 1 markets usually complete within 3–5 business days. Niche B2B or Healthcare studies may take 10–14 days depending on the incidence rate and complexity of the target audience.
+                        </p>
+                    </div>
                 </div>
+
+                <!-- FAQ Item 3 -->
                 <div class="faq-item">
-                    <h4 class="text-lg font-bold mb-4 italic tracking-tight">Are you compliant with international data laws?</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Yes. Clique Survey is fully compliant with GDPR (Europe), CCPA (California), and PIPA (Asia). We maintain ISO 20252 certification for market and social research.</p>
+                    <button class="faq-header group" onclick="toggleFaq(this)">
+                        <h4 class="text-lg font-bold italic tracking-tight group-hover:text-brand transition-colors">Are you compliant with international data laws?</h4>
+                        <span class="faq-icon text-slate-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 pb-8 leading-relaxed">
+                            Yes. Clique Survey is fully compliant with GDPR (Europe), CCPA (California), and PIPA (Asia). We maintain ISO 20252 certification for market and social research, ensuring the highest level of data security and participant privacy.
+                        </p>
+                    </div>
                 </div>
+
+                <!-- FAQ Item 4 -->
                 <div class="faq-item">
-                    <h4 class="text-lg font-bold mb-4 italic tracking-tight">Can you handle custom survey programming?</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Absolutely. Our in-house scripting team handles everything from basic logical flows to complex max-diff, conjoint analysis, and custom shelf tests using Decipher and Confirmit.</p>
+                    <button class="faq-header group" onclick="toggleFaq(this)">
+                        <h4 class="text-lg font-bold italic tracking-tight group-hover:text-brand transition-colors">Can you handle custom survey programming?</h4>
+                        <span class="faq-icon text-slate-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 pb-8 leading-relaxed">
+                            Absolutely. Our in-house scripting team handles everything from basic logical flows to complex max-diff, conjoint analysis, and custom shelf tests using industry-standard platforms like Decipher and Confirmit.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -799,7 +884,7 @@
     <footer class="py-24 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 text-center lg:text-left mobile-center">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col lg:flex-row justify-between items-center gap-12 mb-16">
-                <img src="https://cliquesurvey.com/images/Untitled.svg" alt="Clique" class="h-10 w-auto transition-transform hover:scale-110">
+                <img src="/images/cs_full.svg" alt="Clique Survey" class="h-10 w-auto transition-transform hover:scale-110" onerror="this.src='https://cliquesurvey.com/images/Untitled.svg'">
                 <div class="text-[10px] font-bold text-slate-300 dark:text-slate-700 tracking-premium uppercase">
                     © 2026 Clique Survey Private Limited. All Rights Reserved.
                 </div>
@@ -820,6 +905,19 @@
             const menu = document.getElementById('mobileMenuOverlay');
             menu.classList.toggle('active');
             document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        /* FAQ Toggle Function */
+        function toggleFaq(header) {
+            const item = header.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Optional: Close other items
+            document.querySelectorAll('.faq-item').forEach(i => {
+                if (i !== item) i.classList.remove('active');
+            });
+            
+            item.classList.toggle('active');
         }
 
         function splitToChars(selector) {
