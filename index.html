@@ -133,13 +133,20 @@
         /* --- ENHANCED SPECIALIZATION CARDS --- */
         .specialization-card {
             position: relative;
-            height: 520px;
+            height: 400px; /* Reduced for mobile visibility */
+            width: 100%;
             border-radius: 2.5rem;
             overflow: hidden;
             background: #1e293b;
             transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             transform: translate3d(0,0,0);
             will-change: transform;
+        }
+
+        @media (min-width: 1024px) {
+            .specialization-card {
+                height: 520px;
+            }
         }
 
         .specialization-card:hover {
@@ -303,7 +310,16 @@
         <a href="#quality" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Integrity</a>
         <a href="#industries" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">Sectors</a>
         <a href="#faq" onclick="toggleMobileMenu()" class="text-3xl font-bold uppercase tracking-widest hover:text-brand transition-colors">FAQ</a>
-        <button onclick="toggleModal(); toggleMobileMenu();" class="gradient-brand text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest shadow-xl shadow-brand/20">Join Global Panel</button>
+        
+        <div class="flex flex-col items-center gap-6 mt-4">
+            <button onclick="toggleTheme()" class="flex items-center gap-3 text-slate-500 font-bold uppercase tracking-premium text-xs bg-slate-100 dark:bg-slate-900 px-6 py-3 rounded-full">
+                <span class="block dark:hidden">Dark Mode</span>
+                <span class="hidden dark:block">Light Mode</span>
+                <svg class="w-4 h-4 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <svg class="w-4 h-4 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
+            </button>
+            <button onclick="toggleModal(); toggleMobileMenu();" class="gradient-brand text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest shadow-xl shadow-brand/20">Join Global Panel</button>
+        </div>
     </div>
 
     <!-- JOIN PANEL MODAL -->
@@ -611,9 +627,15 @@
                 </div>
             </div>
             
-            <button class="lg:hidden text-slate-500 p-2 transition-all active:scale-90" onclick="toggleMobileMenu()">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-            </button>
+            <div class="flex items-center gap-4 lg:hidden">
+                <button onclick="toggleTheme()" class="text-slate-500 hover:text-brand p-2 rounded-lg bg-slate-100 dark:bg-slate-900 transition-all active:scale-90">
+                    <svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
+                </button>
+                <button class="text-slate-500 p-2 transition-all active:scale-90" onclick="toggleMobileMenu()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                </button>
+            </div>
         </div>
     </nav>
 
